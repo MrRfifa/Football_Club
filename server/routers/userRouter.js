@@ -1,0 +1,150 @@
+const router = require("express").Router();
+const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+//register
+router.post("/reg", async (req, res) => {
+  try {
+    const { username, password, passwordVerify, type } = req.body;
+
+    //validation
+    if (!username || !password || !passwordVerify) {
+      return res
+        .status(400)
+        .json({ error: "Please enter all required fields" });
+    } else if (password.length < 8) {
+      return res.status(400).json({ error: "Password must be 8" });
+    } else if (password !== passwordVerify) {
+      return res.status(400).json({ error: "Please enter the same password" });
+    }
+    //finding if existing user with the same username
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ error: "An account with this username already exists" });
+    }
+
+    //hash the password
+
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+
+    //save a new user account to database
+    const newUser = new User({
+      username,
+      passwordHash,
+      type,
+    });
+    const savedUser = await newUser.save();
+
+    //Creating the token
+    const token = jwt.sign(
+      {
+        user: savedUser._id,
+        userType: savedUser.type,
+        userName: savedUser.username,
+      },
+      process.env.JWT_SECRET
+    );
+    //res.json({ password: passwordHash, token: token });
+    //send the token in a http-only cookie
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .send({ message: "Registred successfully!" });
+  } catch (error) {
+    //res.json(error);
+    res.status(500).send();
+  }
+});
+
+//log in
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    //validation
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ error: "Please enter all required fields" });
+    }
+    const existingUser = await User.findOne({ username });
+    if (!existingUser) {
+      return res.status(401).json({
+        error: "Wrong username or password",
+      });
+    }
+    const passwordCorrect = await bcrypt.compare(
+      password,
+      existingUser.passwordHash
+    );
+    if (!passwordCorrect) {
+      return res.status(401).json({
+        error: "Wrong username or password",
+      });
+    }
+    //Creating the token
+
+    const token = jwt.sign(
+      {
+        user: existingUser._id,
+        userType: existingUser.type,
+        userName: existingUser.username,
+      },
+      process.env.JWT_SECRET
+    );
+    //send the token in a http-only cookie
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .send({ message: "Loggedin successfully!" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.get("/logout", (req, res) => {
+  res
+    .cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      secure: true,
+      sameSite: "none",
+    })
+    .send();
+});
+//verifying logged in or not
+router.get("/loggedIn", (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      res.send({
+        loggedIn: false,
+        type: "nothing",
+        username: "no one",
+        userid: "null",
+      });
+    } else {
+      const verified = jwt.verify(token, process.env.JWT_SECRET);
+      res.send({
+        loggedIn: true,
+        type: verified.userType,
+        username: verified.userName,
+        userid: verified.user,
+      });
+    }
+  } catch (error) {
+    res.json(false);
+  }
+});
+
+module.exports = router;
