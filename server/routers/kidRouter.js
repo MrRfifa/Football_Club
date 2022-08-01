@@ -41,10 +41,9 @@ router.post("/addKid", auth, async (req, res) => {
 
       //adding the kid to the parent kids array
       var addedKid = mongoose.Types.ObjectId(savedKid._id);
-      console.log(addedKid);
       User.updateOne(
         { _id: parentId },
-        { $push: { kids: addedKid } },
+        { $push: { options: addedKid } },
         function (err, result) {
           if (err) {
             console.log(err);

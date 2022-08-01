@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const kids = require("./kidModel");
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
@@ -9,7 +8,7 @@ const userSchema = new mongoose.Schema({
   options: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "kids",
+      ref: "options",
     },
   ],
 });

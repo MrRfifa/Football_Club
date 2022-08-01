@@ -40,5 +40,6 @@ mongoose.connect(
 //set up routes
 //admin route
 app.use("/admin", require("./routers/adminRouter"));
+app.use("/coach", require("./routers/coachRouter"));
 app.use("/auth", require("./routers/userRouter"));
 app.use("/kid", require("./routers/kidRouter"));

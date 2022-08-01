@@ -20,7 +20,7 @@ const Login = () => {
         "http://localhost:3001/admin/loginadmin",
         Data
       );
-      history("/admin/dashboard");
+      history("/admin/training");
       swal("Success!", result.data.message, "success");
     } catch (error) {
       swal("Oops!", error.response.data.error, "error");

@@ -77,10 +77,10 @@ function ParentSidebar({ username }) {
               onClick={logOut}
               style={{
                 borderRadius: 20,
-                padding: "18px 25px",
+                padding: "15px 20px",
                 fontSize: "18px",
-                marginLeft: "30px",
-                marginTop: "375px",
+                marginLeft: "20px",
+                marginTop: "250px",
                 backgroundColor: isHovering ? "#060b26" : "#010606",
               }}
               onMouseEnter={handleMouseEnter}

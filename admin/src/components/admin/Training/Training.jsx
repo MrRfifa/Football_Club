@@ -3,6 +3,7 @@ import Canceled from "./Canceled";
 import Pending from "./Pending";
 import Confirmed from "./Confirmed";
 import Add from "./Add";
+import Done from "./Done";
 
 const AddTraining = () => {
   return (
@@ -106,7 +107,7 @@ const AddTraining = () => {
           aria-labelledby="done-tab"
           tabIndex="0"
         >
-          <Confirmed />
+          <Done />
         </div>
         <div
           className="tab-pane fade card-body border"

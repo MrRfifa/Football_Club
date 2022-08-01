@@ -16,8 +16,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CoachSidebar from "./components/CoachSidebar/CoachSidebar";
 import MemberSidebar from "./components/MemberSidebar/MemberSidebar";
-import AllPlays from "./pages/Coach/AllPlays";
+import PendingSessions from "./pages/Coach/PendingSessions";
 import PageNotFound from "./pages/NotFound/NotFound";
+import ConfirmedSessions from "./pages/Coach/ConfirmedSessions";
+import DoneSessions from "./pages/Coach/DoneSessions";
 
 function Router() {
   const { type, username } = useContext(AuthContext);
@@ -58,7 +60,9 @@ function Router() {
         {type === "Coach" && (
           <>
             <Route path="/coach" element={<CoachPage />} />
-            <Route path="/all" element={<AllPlays />} />
+            <Route path="/pending" element={<PendingSessions />} />
+            <Route path="/confirmed" element={<ConfirmedSessions />} />
+            <Route path="/done" element={<DoneSessions />} />
             <Route path="/*" element={<PageNotFound />} />
           </>
         )}

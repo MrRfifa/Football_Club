@@ -23,7 +23,7 @@ const Register = () => {
         "http://localhost:3001/admin/regadmin",
         Data
       );
-      history("/admin");
+      history("/admin/training");
       swal("Success!", result.data.message, "success");
     } catch (error) {
       console.log(error);
