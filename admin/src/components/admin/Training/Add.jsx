@@ -14,6 +14,7 @@ const Add = () => {
       .slice(0, 16)
   );
   const [confirmed] = useState(false);
+  const [done] = useState(false);
   const [coachUname] = useState("none");
   async function submitSession(e) {
     e.preventDefault();
@@ -22,6 +23,7 @@ const Add = () => {
         date,
         coachUname,
         confirmed,
+        done,
       };
       const result = await axios.post(
         "http://localhost:3001/admin/addsession",
@@ -64,7 +66,7 @@ const Add = () => {
             ></input>
           </div>
           <div className="form-group mb-3">
-            <button className="btn btn-primary" type="submit">
+            <button className="btn btn-outline-primary" type="submit">
               Add session
             </button>
           </div>

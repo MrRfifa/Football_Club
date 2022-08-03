@@ -14,6 +14,11 @@ const kidSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image: { type: String, required: true },
+  info: {
+    data: Buffer,
+    contentType: String,
+  },
 });
 
 const Kid = mongoose.model("kid", kidSchema);

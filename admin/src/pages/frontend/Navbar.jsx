@@ -20,7 +20,7 @@ const Navbar = () => {
     authButtons = (
       <ul className="navbar-nav">
         <li className="nav-item">
-          <Link className="nav-link" to="/login">
+          <Link className="nav-link" to="/">
             Login
           </Link>
         </li>
@@ -64,11 +64,11 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="#">
                 Home
               </Link>
-            </li>
+            </li> */}
             {authButtons}
           </ul>
         </div>

@@ -1,29 +1,25 @@
 import React from "react";
-import "./Parent.css";
-import axios from "axios";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import axios from "axios";
+import swal from "sweetalert";
 
-function AddKids() {
+const Editkid = () => {
+  let { id } = useParams();
+  let history = useNavigate();
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [date, setDate] = useState(
     new Date(2005, 1, 1).toISOString().slice(0, 10)
   );
-  const [filename, setFilename] = useState("");
-
-  let { id } = useParams();
-  let history = useNavigate();
-
   useEffect(() => {
     if (id) {
       getSingleKid(id);
     }
   }, [id]);
   const getSingleKid = async (id) => {
-    const result = await axios.get(`http://localhost:3001/kid/${id}`);
+    const result = await axios.get(`http://localhost:3001/admin/getkid/${id}`);
     if (result.status === 200) {
       setFirstname(result.data.firstName);
       setLastname(result.data.lastName);
@@ -31,70 +27,29 @@ function AddKids() {
       setDate(d);
     }
   };
-
   const cancelUpdate = () => {
     history(-1);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!id) {
-      try {
-        const formData = new FormData();
-        formData.append("firstName", firstname);
-        formData.append("lastName", lastname);
-        formData.append("dateOfBirth", date);
-        formData.append("image", filename);
-
-        const result = await axios.post(
-          "http://localhost:3001/kid/addKid",
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
-        if (result.status === 200) {
-          toast.success(result.data, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          history("/kid");
-        }
-      } catch (err) {
-        toast.error(err.response.data.error);
-        console.log(err);
+    try {
+      const data = {
+        firstName: firstname,
+        lastName: lastname,
+        dateOfBirth: date,
+      };
+      const result = await axios.put(
+        `http://localhost:3001/admin/update/${id}`,
+        data
+      );
+      if (result.status === 200) {
+        swal("Success!", "kid updated successfully", "success");
+        history(-1);
       }
-    } else {
-      try {
-        const formData = new FormData();
-        formData.append("firstName", firstname);
-        formData.append("lastName", lastname);
-        formData.append("dateOfBirth", date);
-        formData.append("image", filename);
-        const result = await axios.put(
-          `http://localhost:3001/kid/update/${id}`,
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
-        if (result.status === 200) {
-          toast.success(result.data.message, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          history("/kid");
-        }
-      } catch (err) {
-        toast.error(err.response.data.error);
-        console.log(err);
-      }
+    } catch (error) {
+      swal("Ooops!", error.response.data.error, "error");
     }
   };
 
@@ -107,7 +62,7 @@ function AddKids() {
               <h4>Register</h4>
             </div>
             <div className="card-body">
-              <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <form onSubmit={handleSubmit}>
                 <div className="form-group mb-3">
                   <label htmlFor="firstname">Firstname</label>
                   <input
@@ -151,26 +106,12 @@ function AddKids() {
                     required
                   />
                 </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="file">Choose your kid image</label>
-                  <input
-                    type="file"
-                    name="image"
-                    filename="image"
-                    className="form-control"
-                    onChange={(e) => {
-                      setFilename(e.target.files[0]);
-                    }}
-                    accept="image/*"
-                    required
-                  />
-                </div>
                 <div className="form-group mb-3 d-flex justify-content-between">
-                  <button className="btn btn-success" type="submit">
-                    {!id ? "Add kid" : "Update kid"}
+                  <button className="btn btn-outline-success" type="submit">
+                    Update kid
                   </button>
                   <button
-                    className="btn btn-secondary "
+                    className="btn btn-outline-secondary "
                     type="button"
                     onClick={cancelUpdate}
                   >
@@ -184,6 +125,6 @@ function AddKids() {
       </div>
     </div>
   );
-}
+};
 
-export default AddKids;
+export default Editkid;

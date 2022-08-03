@@ -20,7 +20,6 @@ const MasterPage = () => {
         <div id="layoutSidenav_content">
           <main>
             <Outlet />
-            {/* <Navigate to="/admin/profile" /> */}
           </main>
           <Footer />
         </div>

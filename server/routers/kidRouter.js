@@ -2,10 +2,24 @@ const router = require("express").Router();
 const Kid = require("../models/kidModel");
 const User = require("../models/userModel");
 const auth = require("../middlewares/Auth");
+const multer = require("multer");
+const fs = require("fs");
+//const path = require("../images");
 const { default: mongoose } = require("mongoose");
 
+//creating image storage
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "images");
+  },
+  filename: (req, file, callback) => {
+    callback(null, Date.now() + file.originalname);
+  },
+});
+const upload = multer({ storage: storage }).single("image");
+
 //adding kid
-router.post("/addKid", auth, async (req, res) => {
+router.post("/addKid", upload, auth, async (req, res) => {
   try {
     if (req.userType === "Parent") {
       const { firstName, lastName, dateOfBirth } = req.body;
@@ -35,6 +49,11 @@ router.post("/addKid", auth, async (req, res) => {
         dateOfBirth,
         parentId,
         parentUname,
+        image: req.file.filename,
+        info: {
+          data: fs.readFileSync("images/" + req.file.filename),
+          contentType: "image/png",
+        },
       });
 
       const savedKid = await newKid.save();
@@ -48,7 +67,7 @@ router.post("/addKid", auth, async (req, res) => {
           if (err) {
             console.log(err);
           } else {
-            console.log(result);
+            //console.log(result);
           }
         }
       );
@@ -100,7 +119,7 @@ router.delete("/delete/:kidId", auth, async (req, res) => {
             { username: req.username },
             {
               $pullAll: {
-                kids: [{ _id: kidId }],
+                options: [{ _id: kidId }],
               },
             }
           );
@@ -115,10 +134,11 @@ router.delete("/delete/:kidId", auth, async (req, res) => {
   }
 });
 //update kid
-router.put("/update/:kidId", auth, async (req, res) => {
+router.put("/update/:kidId", upload, auth, async (req, res) => {
   try {
     const kidId = mongoose.Types.ObjectId(req.params.kidId);
     const { firstName, lastName, dateOfBirth } = req.body;
+    const { image } = req.file.filename;
 
     Kid.findById(kidId, async function (err, docs) {
       if (err) {
@@ -146,6 +166,11 @@ router.put("/update/:kidId", auth, async (req, res) => {
                 firstName: firstName,
                 lastName: lastName,
                 dateOfBirth: dateOfBirth,
+                image: image,
+                info: {
+                  data: fs.readFileSync("images/" + req.file.filename),
+                  contentType: "image/png",
+                },
               },
             },
             { new: true }

@@ -14,7 +14,7 @@
     margin-left: 300px;
   }
 
-  .styled-table{
+  /* .styled-table{
     border-collapse: collapse;
     margin: auto;
     font-size: 1em;
@@ -64,7 +64,7 @@
 
   .btn-delete{
     background-color: #f44336;
-  }
+  } */
 
 #lastname,#firstname,
 select{

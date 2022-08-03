@@ -8,7 +8,9 @@ const { default: mongoose } = require("mongoose");
 router.get("/getconfirmed", auth, async (req, res) => {
   try {
     coachuname = req.username;
+    let currentDate = new Date().toISOString();
     const confirmedsessions = await TrainingSession.find({
+      date: { $gte: currentDate },
       confirmed: true,
       coachUname: coachuname,
     });
@@ -58,17 +60,17 @@ router.put("/confirm-session/:sessionId", auth, async (req, res) => {
           },
           { new: true }
         );
-        User.updateOne(
-          { _id: coachId },
-          { $push: { options: sessionId } },
-          function (err, result) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(result);
-            }
-          }
-        );
+        // User.updateOne(
+        //   { _id: coachId },
+        //   { $push: { options: sessionId } },
+        //   function (err, result) {
+        //     if (err) {
+        //       console.log(err);
+        //     } else {
+        //       console.log(result);
+        //     }
+        //   }
+        // );
         res.json({ message: "session confirmed successfully" });
       }
     });

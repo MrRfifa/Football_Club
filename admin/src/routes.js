@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MasterPage from "./pages/admin/MasterPage";
 // import Dashboard from "./components/admin/Dashboard";
 // import Profile from "./components/admin/Profile";
-import Home from "./components/frontend/Home";
+//import Home from "./components/frontend/Home";
 import Login from "./components/frontend/Auth/Login";
 import Register from "./components/frontend/Auth/Register";
 import AuthContext from "./context/AuthContext";
@@ -12,6 +12,7 @@ import EditTraining from "./components/admin/Training/EditTraining";
 import Training from "./components/admin/Training/Training";
 import Users from "./components/admin/Users/Users";
 import Kids from "./components/admin/Kids/Kids";
+import Editkid from "./components/admin/Kids/Editkid";
 
 const AdminRoutes = () => {
   const { loggedIn, getLoggedIn } = useContext(AuthContext);
@@ -20,7 +21,7 @@ const AdminRoutes = () => {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
           {loggedIn && (
             <Route path="/admin" element={<MasterPage />}>
               <Route path="/admin/users" element={<Users />} />
@@ -30,11 +31,12 @@ const AdminRoutes = () => {
                 path="/admin/training/edit-session/:id"
                 element={<EditTraining />}
               />
+              <Route path="/admin/kids/edit-kid/:id" element={<Editkid />} />
             </Route>
           )}
           {!loggedIn && (
             <>
-              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </>
           )}

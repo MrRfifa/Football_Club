@@ -240,7 +240,9 @@ router.get("/getpending", adminauth, async (req, res) => {
 //Getting confirmed Sessions where Confirmed=true or coachUname!="none"
 router.get("/getconfirmed", adminauth, async (req, res) => {
   try {
+    let currentDate = new Date().toISOString();
     const confirmedsessions = await TrainingSession.find({
+      date: { $gte: currentDate },
       confirmed: true,
       coachUname: { $ne: "none" },
     });
@@ -257,6 +259,7 @@ router.get("/getcanceled", adminauth, async (req, res) => {
     let currentDate = new Date().toISOString();
     const canceledsessions = await TrainingSession.find({
       date: { $lte: currentDate },
+      coachUname: "none",
     });
     res.status(200).json(canceledsessions);
   } catch (error) {
@@ -322,20 +325,114 @@ router.put("/edit-session/:sessionId", adminauth, async (req, res) => {
 router.delete("/delete-session/:sessionId", adminauth, async (req, res) => {
   try {
     const sessionId = mongoose.Types.ObjectId(req.params.sessionId);
+    // const coachdoc = await User.find({ options: sessionId }, (err, docs) => {
+    //   if (err) {
+    //     console.log("error " + err);
+    //   } else {
+    //     console.log("succ " + docs);
+    //   }
+    // });
+    // console.log("coach :" + coachdoc);
     TrainingSession.findById(sessionId, async function (err, docs) {
       if (err) {
         res
           .status(500)
           .send({ error: "Ooops! error can't get the session ID" });
       } else {
+        // await User.updateOne(
+        //   { username: coachdoc },
+        //   {
+        //     $pullAll: {
+        //       options: [{ _id: sessionId }],
+        //     },
+        //   }
+        // );
         await TrainingSession.deleteOne({ _id: sessionId });
         res.json({ message: "session deleted successfully" });
       }
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ error: "Ooops! error can't get delete session" });
+    res.status(500).send({ error: "Ooops! error can't  delete session" });
   }
 });
 
+//delete a kid
+router.delete("/delete/:kidId", adminauth, async (req, res) => {
+  try {
+    const kidId = mongoose.Types.ObjectId(req.params.kidId);
+    Kid.findById(kidId, async function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        await Kid.deleteOne({ _id: kidId });
+        await User.updateOne(
+          { username: docs.parentUname },
+          {
+            $pullAll: {
+              options: [{ _id: kidId }],
+            },
+          }
+        );
+        res.json({ message: "deleted successfully" });
+      }
+    });
+  } catch (error) {
+    res.send({ message: " Ooops! error in deleting the kid" });
+  }
+});
+
+//update a kid
+router.put("/update/:kidId", adminauth, async (req, res) => {
+  try {
+    const kidId = mongoose.Types.ObjectId(req.params.kidId);
+    const { firstName, lastName, dateOfBirth } = req.body;
+
+    Kid.findById(kidId, async function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        //todo existing kid with the same data
+        // const existingKid = await Kid.findOne({
+        //   lastName: lastName,
+        //   firstName: firstName,
+        //   dateOfBirth: dateOfBirth,
+        // });
+        // console.log(existingKid);
+        // if (existingKid) {
+        //   return res
+        //     .status(400)
+        //     .json({ error: "A kid with those information already exists" });
+        // }
+        //todo existing kid with the same data
+        const updatedkid = await Kid.findOneAndUpdate(
+          { _id: kidId },
+          {
+            $set: {
+              firstName: firstName,
+              lastName: lastName,
+              dateOfBirth: dateOfBirth,
+            },
+          },
+          { new: true }
+        );
+        res.json({ message: "updated successfully" });
+      }
+    });
+  } catch (error) {
+    res.send({ message: "Ooops! error in updating the kid" });
+    console.log(error);
+  }
+});
+
+//get Kid by id
+router.get("/getkid/:id", adminauth, async (req, res) => {
+  try {
+    const Kidinfo = await Kid.findById(mongoose.Types.ObjectId(req.params.id));
+    res.status(200).json(Kidinfo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Ooops! error can't get this specific kid" });
+  }
+});
 module.exports = router;

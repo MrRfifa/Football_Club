@@ -55,7 +55,7 @@ const Canceled = () => {
           <td>
             <Link
               to={`edit-session/${item._id}`}
-              className="btn btn-success btn-sm"
+              className="btn btn-outline-warning btn-sm"
             >
               Edit
             </Link>
@@ -63,7 +63,7 @@ const Canceled = () => {
           <td>
             <button
               type="button"
-              className="btn btn-danger btn-sm"
+              className="btn btn-outline-danger btn-sm"
               onClick={(e) => deleteSession(e, item._id)}
             >
               Delete
