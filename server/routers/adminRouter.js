@@ -322,18 +322,6 @@ router.put("/edit-session/:sessionId", adminauth, async (req, res) => {
   }
 });
 
-///test
-router.get("/test/coach/:sessionId", adminauth, async (req, res) => {
-  try {
-    const sessionId = mongoose.Types.ObjectId(req.params.sessionId);
-    const coachdoc = await User.find({ options: sessionId });
-    res.status(200).send({ username: coachdoc[0].username });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-///test
 //Deleting Training session
 router.delete("/delete-session/:sessionId", adminauth, async (req, res) => {
   try {
