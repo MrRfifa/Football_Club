@@ -321,32 +321,39 @@ router.put("/edit-session/:sessionId", adminauth, async (req, res) => {
     res.status(500).send({ error: "Ooops! error can't update sessions" });
   }
 });
+
+///test
+router.get("/test/coach/:sessionId", adminauth, async (req, res) => {
+  try {
+    const sessionId = mongoose.Types.ObjectId(req.params.sessionId);
+    const coachdoc = await User.find({ options: sessionId });
+    res.status(200).send({ username: coachdoc[0].username });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+///test
 //Deleting Training session
 router.delete("/delete-session/:sessionId", adminauth, async (req, res) => {
   try {
     const sessionId = mongoose.Types.ObjectId(req.params.sessionId);
-    // const coachdoc = await User.find({ options: sessionId }, (err, docs) => {
-    //   if (err) {
-    //     console.log("error " + err);
-    //   } else {
-    //     console.log("succ " + docs);
-    //   }
-    // });
-    // console.log("coach :" + coachdoc);
+    const coachdoc = await User.find({ options: sessionId });
+    const coachusername = coachdoc[0].username;
     TrainingSession.findById(sessionId, async function (err, docs) {
       if (err) {
         res
           .status(500)
           .send({ error: "Ooops! error can't get the session ID" });
       } else {
-        // await User.updateOne(
-        //   { username: coachdoc },
-        //   {
-        //     $pullAll: {
-        //       options: [{ _id: sessionId }],
-        //     },
-        //   }
-        // );
+        await User.updateOne(
+          { username: coachusername },
+          {
+            $pullAll: {
+              options: [{ _id: sessionId }],
+            },
+          }
+        );
         await TrainingSession.deleteOne({ _id: sessionId });
         res.json({ message: "session deleted successfully" });
       }

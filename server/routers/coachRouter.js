@@ -60,17 +60,17 @@ router.put("/confirm-session/:sessionId", auth, async (req, res) => {
           },
           { new: true }
         );
-        // User.updateOne(
-        //   { _id: coachId },
-        //   { $push: { options: sessionId } },
-        //   function (err, result) {
-        //     if (err) {
-        //       console.log(err);
-        //     } else {
-        //       console.log(result);
-        //     }
-        //   }
-        // );
+        User.updateOne(
+          { _id: coachId },
+          { $push: { options: sessionId } },
+          function (err, result) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(result);
+            }
+          }
+        );
         res.json({ message: "session confirmed successfully" });
       }
     });
