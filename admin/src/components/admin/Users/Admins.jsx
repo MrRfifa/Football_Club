@@ -1,11 +1,11 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import AuthContext from "../../../context/AuthContext";
 
 const Admins = () => {
   const [loading, setLoading] = useState(true);
   const [adminList, setAdminsList] = useState([]);
+  const { username } = useContext(AuthContext);
 
   useEffect(() => {
     getAdmins();
@@ -43,8 +43,21 @@ const Admins = () => {
     adminsessions_HTML_TABLE = adminList.map((item, index) => {
       return (
         <tr key={index}>
-          <td className="ps-5">{index + 1}</td>
-          <td className="ps-5">{item.username}</td>
+          <td className="ps-5" style={{ width: "70px" }}>
+            {index + 1}
+          </td>
+          <td className="ps-5" style={{ width: "70px" }}>
+            {item.username}
+          </td>
+          {item.username === username ? (
+            <td className="ps-5" style={{ width: "50px" }}>
+              <span class="badge rounded-pill text-bg-success">True</span>
+            </td>
+          ) : (
+            <td className="ps-5" style={{ width: "50px" }}>
+              <span class="badge rounded-pill text-bg-danger">False</span>
+            </td>
+          )}
 
           {/* <td>
             <Link
@@ -74,8 +87,15 @@ const Admins = () => {
         <table className="table table-bordered table-striped table-hover">
           <thead>
             <tr>
-              <th className="ps-5">ID</th>
-              <th className="ps-5">Username</th>
+              <th className="ps-5" style={{ width: "70px" }}>
+                ID
+              </th>
+              <th className="ps-5" style={{ width: "70px" }}>
+                Username
+              </th>
+              <th className="ps-5" style={{ width: "50px" }}>
+                Logged In
+              </th>
             </tr>
           </thead>
           <tbody>{adminsessions_HTML_TABLE}</tbody>

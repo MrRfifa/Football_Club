@@ -2,16 +2,17 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as AiIcons from "react-icons/ai";
 import { useState } from "react";
-import { SidebarData } from "./CoachSidebarData";
 import { Button } from "@mui/material";
 import { FiLogOut } from "react-icons/fi";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
 import { useContext } from "react";
-import "./CoachSidebar.css";
+import "./UserSidebar.css";
 import { IconContext } from "react-icons";
+import IconButton from "@mui/material/IconButton";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-function CoachSidebar({ username }) {
+function UserSidebar({ username, UserSidebarData }) {
   const [sidebarr, setSidebarr] = useState(true);
   const { getLoggedIn } = useContext(AuthContext);
   const history = useNavigate();
@@ -36,18 +37,22 @@ function CoachSidebar({ username }) {
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className="sidebar" style={{ marginLeft: "250px" }}>
-          <div style={{ marginLeft: "1100px" }}>
+          <div className="d-flex" style={{ marginLeft: "1000px" }}>
             <div
               style={{
-                width: "100px",
+                width: "80px",
                 height: "30px",
                 backgroundColor: "#f5f5f5",
-                padding: "5px 30px",
+                padding: "5px 15px",
                 borderRadius: "4px",
+                marginTop: "7px",
               }}
             >
               {username}
             </div>
+            <IconButton className="ms-5" aria-label="delete" size="small">
+              <AccountCircleIcon fontSize="large" color="action" />
+            </IconButton>
           </div>
         </div>
         <nav className={sidebarr ? "nav-menu active" : "nav-menu"}>
@@ -61,7 +66,7 @@ function CoachSidebar({ username }) {
                 <AiIcons.AiOutlineMenu />
               </Link>
             </li>
-            {SidebarData.map((item, index) => {
+            {UserSidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>
@@ -95,4 +100,4 @@ function CoachSidebar({ username }) {
   );
 }
 
-export default CoachSidebar;
+export default UserSidebar;

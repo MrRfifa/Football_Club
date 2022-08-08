@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const auth = require("../middlewares/Auth");
 
 //register
 router.post("/reg", async (req, res) => {
@@ -144,6 +145,56 @@ router.get("/loggedIn", (req, res) => {
     }
   } catch (error) {
     res.json(false);
+  }
+});
+
+router.put("/changepassword", auth, async (req, res) => {
+  try {
+    const { oldPassword, newPassword, newPasswordConfirm } = req.body;
+
+    const user = await User.findOne({ username: req.username });
+    if (!oldPassword || !newPassword || !newPasswordConfirm) {
+      return res
+        .status(400)
+        .json({ error: "Please enter all required fields" });
+    } else if (newPassword.length < 8) {
+      return res.status(400).json({ error: "Password must be 8" });
+    } else if (newPassword !== newPasswordConfirm) {
+      return res.status(400).json({ error: "Please enter the same password" });
+    }
+    const passwordCorrect = await bcrypt.compare(
+      oldPassword,
+      user.passwordHash
+    );
+
+    if (!passwordCorrect) {
+      return res.status(401).json({
+        message: "Wrong Password entered",
+      });
+    } else {
+      const salt = await bcrypt.genSalt();
+      const newPasswordHash = await bcrypt.hash(newPassword, salt);
+      User.findOneAndUpdate(
+        {
+          username: req.username,
+        },
+        { $set: { passwordHash: newPasswordHash } },
+        {
+          returnNewDocument: true,
+        }
+      ).then(
+        (data) => {
+          console.log("Data", data);
+        },
+        (err) => {
+          console.log("Error Update", err);
+        }
+      );
+      return res.json({ message: "Password updated successfully" });
+      //console.log(user);
+    }
+  } catch (error) {
+    res.json({ message: "Oooops!!" });
   }
 });
 

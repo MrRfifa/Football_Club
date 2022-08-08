@@ -23,7 +23,8 @@ const Register = () => {
         "http://localhost:3001/admin/regadmin",
         Data
       );
-      history("/admin/training");
+      history("/admin/dashboard");
+      window.location.reload(false);
       swal("Success!", result.data.message, "success");
     } catch (error) {
       console.log(error);

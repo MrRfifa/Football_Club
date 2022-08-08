@@ -1,9 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-
 import Home from "./pages/MainPage/Home";
 import SigninPage from "./pages/MainPage/SigninPage";
 import SignupPage from "./pages/MainPage/SignupPage";
-
 import MemberPage from "./pages/Member/memberPage";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
@@ -11,23 +9,30 @@ import ParentPage from "./pages/Parent/parentPage";
 import Kids from "./pages/Parent/Kids";
 import AddKids from "./pages/Parent/AddKids";
 import CoachPage from "./pages/Coach/coachPage";
-import ParentSidebar from "../src/components/ParentSidebar/ParentSidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CoachSidebar from "./components/CoachSidebar/CoachSidebar";
-import MemberSidebar from "./components/MemberSidebar/MemberSidebar";
 import PendingSessions from "./pages/Coach/PendingSessions";
 import PageNotFound from "./pages/NotFound/NotFound";
 import ConfirmedSessions from "./pages/Coach/ConfirmedSessions";
 import DoneSessions from "./pages/Coach/DoneSessions";
+import UserSidebar from "./components/UserSidebar/UserSidebar";
+import { ParentSidebarData } from "./components/UserSidebar/UserSidebarData";
+import { MemberSidebarData } from "./components/UserSidebar/UserSidebarData";
+import { CoachSidebarData } from "./components/UserSidebar/UserSidebarData";
 
 function Router() {
   const { type, username } = useContext(AuthContext);
   return (
     <>
-      {type === "Parent" && <ParentSidebar username={username} />}
-      {type === "Coach" && <CoachSidebar username={username} />}
-      {type === "Member" && <MemberSidebar username={username} />}
+      {type === "Parent" && (
+        <UserSidebar username={username} UserSidebarData={ParentSidebarData} />
+      )}
+      {type === "Coach" && (
+        <UserSidebar username={username} UserSidebarData={CoachSidebarData} />
+      )}
+      {type === "Member" && (
+        <UserSidebar username={username} UserSidebarData={MemberSidebarData} />
+      )}
       <ToastContainer
         position="top-center"
         autoClose={5000}

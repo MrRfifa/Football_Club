@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MasterPage from "./pages/admin/MasterPage";
-// import Dashboard from "./components/admin/Dashboard";
+import Dashboard from "./components/admin/Dashboard";
 // import Profile from "./components/admin/Profile";
 //import Home from "./components/frontend/Home";
 import Login from "./components/frontend/Auth/Login";
@@ -25,6 +25,7 @@ const AdminRoutes = () => {
           {loggedIn && (
             <Route path="/admin" element={<MasterPage />}>
               <Route path="/admin/users" element={<Users />} />
+              <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/kids" element={<Kids />} />
               <Route path="/admin/training" element={<Training />} />
               <Route
