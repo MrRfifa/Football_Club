@@ -70,9 +70,8 @@ const PendingSessions = () => {
   }
 
   return (
-    <div className="container-fluid px-4">
+    <div className="container-fluid px-4 mt-5">
       <h1
-        className="mt-4"
         style={{
           marginTop: "100px",
           marginLeft: "250px",
@@ -80,24 +79,10 @@ const PendingSessions = () => {
       >
         Pending session
       </h1>
-      <div
-        style={{
-          marginTop: "70px",
-          marginLeft: "250px",
-        }}
-      >
+      <div>
         <div className="container px-4">
           <div className="card-body">
-            <div
-              className="badge bg-danger text-wrap"
-              style={{
-                width: "8rem",
-                marginLeft: "10px",
-                marginBottom: "10px",
-              }}
-            >
-              Time zone UTC-2
-            </div>
+            <div className="badge bg-danger text-wrap">Time zone UTC-2</div>
             <table className="table table-bordered table-striped">
               <thead>
                 <tr>

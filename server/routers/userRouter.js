@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
+const Kid = require("../models/kidModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/Auth");
@@ -120,7 +121,7 @@ router.get("/logout", (req, res) => {
       secure: true,
       sameSite: "none",
     })
-    .send();
+    .send({ message: "logged out successfully" });
 });
 //verifying logged in or not
 router.get("/loggedIn", (req, res) => {
@@ -148,54 +149,97 @@ router.get("/loggedIn", (req, res) => {
   }
 });
 
+//change password
 router.put("/changepassword", auth, async (req, res) => {
-  try {
-    const { oldPassword, newPassword, newPasswordConfirm } = req.body;
+  const { oldPassword, newPassword, newPasswordConfirm } = req.body;
 
-    const user = await User.findOne({ username: req.username });
-    if (!oldPassword || !newPassword || !newPasswordConfirm) {
-      return res
-        .status(400)
-        .json({ error: "Please enter all required fields" });
-    } else if (newPassword.length < 8) {
-      return res.status(400).json({ error: "Password must be 8" });
-    } else if (newPassword !== newPasswordConfirm) {
-      return res.status(400).json({ error: "Please enter the same password" });
-    }
-    const passwordCorrect = await bcrypt.compare(
-      oldPassword,
-      user.passwordHash
+  const user = await User.findOne({ username: req.username });
+  if (!oldPassword || !newPassword || !newPasswordConfirm) {
+    return res.status(400).json({ error: "Please enter all required fields" });
+  } else if (newPassword.length < 8) {
+    return res.status(400).json({ error: "Password must be 8" });
+  } else if (newPassword !== newPasswordConfirm) {
+    return res.status(400).json({ error: "Please enter the same password" });
+  }
+  const passwordCorrect = await bcrypt.compare(oldPassword, user.passwordHash);
+
+  if (!passwordCorrect) {
+    return res.status(401).json({
+      error: "Wrong Password entered",
+    });
+  } else {
+    const salt = await bcrypt.genSalt();
+    const newPasswordHash = await bcrypt.hash(newPassword, salt);
+    User.findOneAndUpdate(
+      {
+        username: req.username,
+      },
+      { $set: { passwordHash: newPasswordHash } },
+      {
+        returnNewDocument: true,
+      }
+    ).then(
+      (data) => {
+        //console.log("Data", data);
+      },
+      (err) => {
+        //console.log("Error Update", err);
+      }
     );
-
-    if (!passwordCorrect) {
-      return res.status(401).json({
-        message: "Wrong Password entered",
-      });
-    } else {
-      const salt = await bcrypt.genSalt();
-      const newPasswordHash = await bcrypt.hash(newPassword, salt);
-      User.findOneAndUpdate(
-        {
-          username: req.username,
-        },
-        { $set: { passwordHash: newPasswordHash } },
-        {
-          returnNewDocument: true,
-        }
-      ).then(
-        (data) => {
-          console.log("Data", data);
-        },
-        (err) => {
-          console.log("Error Update", err);
-        }
-      );
-      return res.json({ message: "Password updated successfully" });
-      //console.log(user);
-    }
-  } catch (error) {
-    res.json({ message: "Oooops!!" });
+    return res.json({ message: "Password updated successfully" });
   }
 });
 
+//change username
+router.put("/changeusername", auth, async (req, res) => {
+  const { newUsername, password } = req.body;
+
+  const user = await User.findOne({ username: req.username });
+  if (!newUsername || !password) {
+    return res.status(400).json({ error: "Please enter all required fields" });
+  } else if (password.length < 8) {
+    return res.status(400).json({ error: "Password must be 8" });
+  }
+  const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
+
+  if (!passwordCorrect) {
+    return res.status(401).json({
+      error: "Wrong Password entered",
+    });
+  } else {
+    User.findOneAndUpdate(
+      {
+        _id: user._id,
+      },
+      { $set: { username: newUsername } },
+      {
+        returnNewDocument: true,
+      }
+    ).then(
+      (data) => {
+        // console.log("Data", data);
+      },
+      (err) => {
+        // console.log("Error Update", err);
+      }
+    );
+    Kid.updateMany(
+      {
+        parentId: user._id,
+      },
+      { $set: { parentUname: newUsername } },
+      {
+        returnNewDocument: true,
+      }
+    ).then(
+      (data) => {
+        // console.log("Data", data);
+      },
+      (err) => {
+        // console.log("Error Update", err);
+      }
+    );
+    return res.json({ message: "Username updated successfully" });
+  }
+});
 module.exports = router;

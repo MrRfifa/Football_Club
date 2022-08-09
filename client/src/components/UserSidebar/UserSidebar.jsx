@@ -1,22 +1,13 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import * as AiIcons from "react-icons/ai";
-import { useState } from "react";
 import { Button } from "@mui/material";
 import { FiLogOut } from "react-icons/fi";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
-import { useContext } from "react";
-import "./UserSidebar.css";
-import { IconContext } from "react-icons";
-import IconButton from "@mui/material/IconButton";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-function UserSidebar({ username, UserSidebarData }) {
-  const [sidebarr, setSidebarr] = useState(true);
+const UserSidebar = ({ username, UserSidebarData }) => {
   const { getLoggedIn } = useContext(AuthContext);
   const history = useNavigate();
-
   async function logOut() {
     await axios.get("http://localhost:3001/auth/logout");
     await getLoggedIn();
@@ -24,80 +15,83 @@ function UserSidebar({ username, UserSidebarData }) {
   }
   const [isHovering, setIsHovering] = useState(false);
 
-  const handleMouseEnter = () => {
+  const buttonMouseEnter = () => {
     setIsHovering(true);
   };
 
-  const handleMouseLeave = () => {
+  const buttonMouseLeave = () => {
     setIsHovering(false);
   };
-
-  const showSidebar = () => setSidebarr(true);
   return (
-    <>
-      <IconContext.Provider value={{ color: "#fff" }}>
-        <div className="sidebar" style={{ marginLeft: "250px" }}>
-          <div className="d-flex" style={{ marginLeft: "1000px" }}>
-            <div
-              style={{
-                width: "80px",
-                height: "30px",
-                backgroundColor: "#f5f5f5",
-                padding: "5px 15px",
-                borderRadius: "4px",
-                marginTop: "7px",
-              }}
-            >
-              {username}
+    <div>
+      <nav className="navbar bg-success fixed-top">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to="#">
+            Welcome <strong> {username} </strong>
+          </Link>
+
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+            className="offcanvas offcanvas-end bg-success"
+            tabIndex="-1"
+            id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel"
+          >
+            <div className="offcanvas-header">
+              <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
+                Menu
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
             </div>
-            <IconButton className="ms-5" aria-label="delete" size="small">
-              <AccountCircleIcon fontSize="large" color="action" />
-            </IconButton>
+            <div className="offcanvas-body">
+              <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                {UserSidebarData.map((item, index) => {
+                  return (
+                    <li key={index} className="nav-item">
+                      <Link className="nav-link  fs-5" to={item.path}>
+                        <span>{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+
+                <Button
+                  variant="contained"
+                  endIcon={<FiLogOut />}
+                  onClick={logOut}
+                  style={{
+                    borderRadius: 20,
+                    padding: "15px 20px",
+                    fontSize: "18px",
+                    marginLeft: "20px",
+                    marginTop: "400px",
+                    backgroundColor: isHovering ? "#060b26" : "#010606",
+                  }}
+                  onMouseEnter={buttonMouseEnter}
+                  onMouseLeave={buttonMouseLeave}
+                >
+                  Logout
+                </Button>
+              </ul>
+            </div>
           </div>
         </div>
-        <nav className={sidebarr ? "nav-menu active" : "nav-menu"}>
-          <ul className="nav-menu-items" onClick={showSidebar}>
-            <li className="navbar-toggle">
-              <Link
-                to="#"
-                className="menu-bars"
-                style={{ pointerEvents: sidebarr === false ? "" : "none" }}
-              >
-                <AiIcons.AiOutlineMenu />
-              </Link>
-            </li>
-            {UserSidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })}
-            <Button
-              variant="contained"
-              endIcon={<FiLogOut />}
-              onClick={logOut}
-              style={{
-                borderRadius: 20,
-                padding: "15px 20px",
-                fontSize: "18px",
-                marginLeft: "20px",
-                marginTop: "250px",
-                backgroundColor: isHovering ? "#060b26" : "#010606",
-              }}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              Logout
-            </Button>
-          </ul>
-        </nav>
-      </IconContext.Provider>
-    </>
+      </nav>
+    </div>
   );
-}
+};
 
 export default UserSidebar;

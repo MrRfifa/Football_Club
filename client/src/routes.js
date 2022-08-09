@@ -2,13 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/MainPage/Home";
 import SigninPage from "./pages/MainPage/SigninPage";
 import SignupPage from "./pages/MainPage/SignupPage";
-import MemberPage from "./pages/Member/memberPage";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
-import ParentPage from "./pages/Parent/parentPage";
 import Kids from "./pages/Parent/Kids";
 import AddKids from "./pages/Parent/AddKids";
-import CoachPage from "./pages/Coach/coachPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PendingSessions from "./pages/Coach/PendingSessions";
@@ -16,9 +13,13 @@ import PageNotFound from "./pages/NotFound/NotFound";
 import ConfirmedSessions from "./pages/Coach/ConfirmedSessions";
 import DoneSessions from "./pages/Coach/DoneSessions";
 import UserSidebar from "./components/UserSidebar/UserSidebar";
-import { ParentSidebarData } from "./components/UserSidebar/UserSidebarData";
-import { MemberSidebarData } from "./components/UserSidebar/UserSidebarData";
-import { CoachSidebarData } from "./components/UserSidebar/UserSidebarData";
+import {
+  ParentSidebarData,
+  CoachSidebarData,
+  MemberSidebarData,
+} from "./components/UserSidebar/UserSidebarData";
+import All from "./pages/Member/All";
+import Profile from "./components/Profile/Profile";
 
 function Router() {
   const { type, username } = useContext(AuthContext);
@@ -55,25 +56,26 @@ function Router() {
         )}
         {type === "Parent" && (
           <>
-            <Route path="/parent" exact element={<ParentPage />} />
             <Route path="/kid" element={<Kids />} />
             <Route path="/addkid" element={<AddKids />} />
             <Route path="/update/:id" element={<AddKids />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/*" element={<PageNotFound />} />
           </>
         )}
         {type === "Coach" && (
           <>
-            <Route path="/coach" element={<CoachPage />} />
             <Route path="/pending" element={<PendingSessions />} />
             <Route path="/confirmed" element={<ConfirmedSessions />} />
             <Route path="/done" element={<DoneSessions />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/*" element={<PageNotFound />} />
           </>
         )}
         {type === "Member" && (
           <>
-            <Route path="/member" element={<MemberPage />} />
+            <Route path="/all" element={<All />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/*" element={<PageNotFound />} />
           </>
         )}

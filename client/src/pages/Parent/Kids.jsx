@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./Parent.css";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -40,7 +39,6 @@ const Kids = () => {
   return (
     <div className="container-fluid px-4">
       <h1
-        className="mt-4"
         style={{
           marginTop: "100px",
           marginLeft: "250px",
@@ -48,12 +46,7 @@ const Kids = () => {
       >
         Your kids
       </h1>
-      <div
-        style={{
-          marginTop: "70px",
-          marginLeft: "250px",
-        }}
-      >
+      <div>
         <div className="container px-4">
           <div className="card-body">
             <table className="table table-bordered table-striped">

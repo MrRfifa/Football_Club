@@ -43,7 +43,16 @@ const SignUpForm = () => {
       );
       swal("Success!", result.data.message);
       await getLoggedIn();
-      history(`/${type.toLowerCase()}`);
+      let initroute = "";
+
+      if (type === "Parent") {
+        initroute = "kid";
+      } else if (type === "Coach") {
+        initroute = "pending";
+      } else {
+        initroute = "all";
+      }
+      history(`/${initroute}`);
     } catch (error) {
       swal("Oops!", error.response.data.error, "error");
     }

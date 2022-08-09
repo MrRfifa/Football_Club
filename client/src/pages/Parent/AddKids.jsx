@@ -1,5 +1,4 @@
 import React from "react";
-import "./Parent.css";
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -99,7 +98,7 @@ function AddKids() {
   };
 
   return (
-    <div className="container py-5">
+    <div className="container py-5 mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card">

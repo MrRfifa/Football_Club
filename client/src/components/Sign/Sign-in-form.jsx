@@ -38,11 +38,19 @@ const SignInForm = () => {
       const loggedInRes = await axios.get(
         "http://localhost:3001/auth/loggedIn"
       );
-      const type = loggedInRes.data.type.toLowerCase();
+      const type = loggedInRes.data.type;
+      let initroute = "";
 
+      if (type === "Parent") {
+        initroute = "kid";
+      } else if (type === "Coach") {
+        initroute = "pending";
+      } else {
+        initroute = "all";
+      }
       await getLoggedIn();
 
-      history(`/${type}`);
+      history(`/${initroute}`);
       swal("Success!", result.data.message);
     } catch (error) {
       swal("Oops!", error.response.data.error, "error");
