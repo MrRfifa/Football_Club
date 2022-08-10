@@ -1,5 +1,9 @@
 export const ParentSidebarData = [
   {
+    title: "Main page",
+    path: "/parent",
+  },
+  {
     title: "Kids",
     path: "/kid",
   },
@@ -14,8 +18,16 @@ export const ParentSidebarData = [
 ];
 export const MemberSidebarData = [
   {
-    title: "All plays",
+    title: "Main page",
+    path: "/member",
+  },
+  {
+    title: "All sessions",
     path: "/all",
+  },
+  {
+    title: "Confirmed participation",
+    path: "/confirmed",
   },
   {
     title: "Profile",
@@ -24,6 +36,10 @@ export const MemberSidebarData = [
 ];
 
 export const CoachSidebarData = [
+  {
+    title: "Main page",
+    path: "/coach",
+  },
   {
     title: "Pending",
     path: "/pending",

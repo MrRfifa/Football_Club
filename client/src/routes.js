@@ -19,7 +19,11 @@ import {
   MemberSidebarData,
 } from "./components/UserSidebar/UserSidebarData";
 import All from "./pages/Member/All";
+import Confirmed from "./pages/Member/Confirmed";
 import Profile from "./components/Profile/Profile";
+import Parent from "./pages/Parent/Parent";
+import Coach from "./pages/Coach/Coach";
+import Member from "./pages/Member/Member";
 
 function Router() {
   const { type, username } = useContext(AuthContext);
@@ -56,6 +60,7 @@ function Router() {
         )}
         {type === "Parent" && (
           <>
+            <Route path="/parent" element={<Parent />} />
             <Route path="/kid" element={<Kids />} />
             <Route path="/addkid" element={<AddKids />} />
             <Route path="/update/:id" element={<AddKids />} />
@@ -65,6 +70,7 @@ function Router() {
         )}
         {type === "Coach" && (
           <>
+            <Route path="/coach" element={<Coach />} />
             <Route path="/pending" element={<PendingSessions />} />
             <Route path="/confirmed" element={<ConfirmedSessions />} />
             <Route path="/done" element={<DoneSessions />} />
@@ -74,7 +80,9 @@ function Router() {
         )}
         {type === "Member" && (
           <>
+            <Route path="/member" element={<Member />} />
             <Route path="/all" element={<All />} />
+            <Route path="/confirmed" element={<Confirmed />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/*" element={<PageNotFound />} />
           </>

@@ -1,31 +1,57 @@
 import React from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
 
 const Slider = ({ img1, img2, img3 }) => {
   return (
-    <Carousel
-      autoPlay={true}
-      infiniteLoop={true}
-      showThumbs={false}
-      showIndicators={false}
-      showStatus={false}
-      showArrows={false}
-      interval={2000}
+    <div
+      id="carouselExampleInterval"
+      className="carousel slide carousel-fade"
+      data-bs-ride="carousel"
     >
-      <div>
-        <img src={img1} alt={img1} />
-        <p className="legend">Legend 1</p>
+      <div className="carousel-inner">
+        <div className="carousel-item active" data-bs-interval="10000">
+          <img
+            src={img1}
+            className="d-block w-100"
+            alt="..."
+            style={{ height: 600 }}
+          />
+        </div>
+        <div className="carousel-item" data-bs-interval="2000">
+          <img
+            src={img2}
+            className="d-block w-100"
+            alt="..."
+            style={{ height: 600 }}
+          />
+        </div>
+        <div className="carousel-item">
+          <img
+            src={img3}
+            className="d-block w-100"
+            alt="..."
+            style={{ height: 600 }}
+          />
+        </div>
       </div>
-      <div>
-        <img src={img2} alt={img2} />
-        <p className="legend">Legend 2</p>
-      </div>
-      <div>
-        <img src={img3} alt={img3} />
-        <p className="legend">Legend 3</p>
-      </div>
-    </Carousel>
+      <button
+        className="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleInterval"
+        data-bs-slide="prev"
+      >
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Previous</span>
+      </button>
+      <button
+        className="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleInterval"
+        data-bs-slide="next"
+      >
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Next</span>
+      </button>
+    </div>
   );
 };
 
