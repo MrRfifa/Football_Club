@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import Qrcode from "../../components/Modal/Qrcode";
+import AuthContext from "../../context/AuthContext";
 
 const PendingSessions = () => {
+  const { username } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [pendingList, setPendingList] = useState([]);
 
@@ -24,12 +27,22 @@ const PendingSessions = () => {
     pendingsessions_HTML_TABLE = pendingList.map((item, index) => {
       item.date = item.date.slice(0, 16).split("T").join(" ");
       return (
-        <tr key={index}>
-          <td>{index + 1}</td>
-          <td>{item.date}</td>
-          <td>{item.adminUname}</td>
-          <td>{item.coachUname}</td>
-        </tr>
+        <>
+          <tr key={index}>
+            <td>{index + 1}</td>
+            <td>{item.date}</td>
+            <td>{item.adminUname}</td>
+            <td>{item.coachUname}</td>
+            <td>
+              <Qrcode
+                username={username}
+                coach={item.coachUname}
+                admin={item.adminUname}
+                date={item.date}
+              />
+            </td>
+          </tr>
+        </>
       );
     });
   }
@@ -42,12 +55,11 @@ const PendingSessions = () => {
           marginLeft: "250px",
         }}
       >
-        All sessions
+        Confirmed sessions
       </h1>
       <div>
         <div className="container px-4">
           <div className="card-body">
-            <div className="badge bg-danger text-wrap">Time zone UTC-2</div>
             <table className="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -55,6 +67,7 @@ const PendingSessions = () => {
                   <th>Date</th>
                   <th>Responsible Admin</th>
                   <th>Responsible Coach</th>
+                  <th>QR Code</th>
                 </tr>
               </thead>
               <tbody>{pendingsessions_HTML_TABLE}</tbody>

@@ -75,7 +75,6 @@ const PendingSessions = () => {
       <div>
         <div className="container px-4">
           <div className="card-body">
-            <div className="badge bg-danger text-wrap">Time zone UTC-2</div>
             <table className="table table-bordered table-striped">
               <thead>
                 <tr>
