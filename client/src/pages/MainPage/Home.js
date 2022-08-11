@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InfoSection from "../../components/infoSection/infoSection";
 import MainSection from "../../components/MainSection/mainSection";
 import Navbar from "../../components/Navbar/navbar";
-import Services from "../../components/services/services";
+import Services from "../../components/Servicef/Services";
 import { homeObjOne, homeObjTwo } from "../../components/infoSection/data";
 import Sidebar from "../../components/SideBar/Sidebar";
 import Footer from "../../components/Footer/footer";

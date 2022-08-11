@@ -4,11 +4,6 @@ import { CgWebsite } from "react-icons/cg";
 import { animateScroll as scroll } from "react-scroll";
 import {
   FooterContainer,
-  FooterLink,
-  FooterLinkTitle,
-  FooterLinksContainer,
-  FooterLinkItems,
-  FooterLinksWrapper,
   FooterWrap,
   SocialIconLink,
   SocialIcons,
@@ -25,7 +20,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <FooterWrap>
-        <FooterLinksContainer>
+        {/* <FooterLinksContainer>
           <FooterLinksWrapper>
             <FooterLinkItems>
               <FooterLinkTitle>About US</FooterLinkTitle>
@@ -42,7 +37,7 @@ const Footer = () => {
               <FooterLink to="/">Sign up</FooterLink>
             </FooterLinkItems>
           </FooterLinksWrapper>
-        </FooterLinksContainer>
+        </FooterLinksContainer> */}
         <SocialMedia>
           <SocialMediaWrap>
             <SocialLogo to="/" onClick={toggleHome}>

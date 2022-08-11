@@ -4,10 +4,9 @@ export const homeObjOne = {
   lightText: true,
   lightTextDesc: true,
   topLine: "Lorem Ipsum",
-  headline:
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+  headline: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet...",
   description:
-    "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a nunc dolor. Donec finibus libero leo, vel egestas quam bibendum dignissim. Mauris tincidunt tincidunt placerat..",
   buttonLabel: "Get Started",
   imgStart: false,
   img: require("../../assets/images/player.svg").default,
@@ -23,10 +22,9 @@ export const homeObjTwo = {
   lightText: false,
   lightTextDesc: false,
   topLine: "Lorem Ipsum",
-  headline:
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+  headline: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet...",
   description:
-    "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a nunc dolor. Donec finibus libero leo, vel egestas quam bibendum dignissim. Mauris tincidunt tincidunt placerat..",
   buttonLabel: "Get Started",
   imgStart: true,
   img: require("../../assets/images/fans.svg").default,
@@ -43,9 +41,9 @@ export const homeObjTwo = {
 //   lightTextDesc: false,
 //   topLine: "Lorem Ipsum",
 //   headline:
-//     "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+//     "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
 //   description:
-//     "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type",
+//     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a nunc dolor. Donec finibus libero leo, vel egestas quam bibendum dignissim. Mauris tincidunt tincidunt placerat..",
 //   buttonLabel: "Get Started",
 //   imgStart: false,
 //   img: require("../../assets/images/goal.svg").default,
