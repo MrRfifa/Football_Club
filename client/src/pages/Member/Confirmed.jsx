@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Qrcode from "../../components/Modal/Qrcode";
 import AuthContext from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 const PendingSessions = () => {
   const { username } = useContext(AuthContext);
@@ -17,6 +18,23 @@ const PendingSessions = () => {
         setPendingList(res.data);
       }
       setLoading(false);
+    });
+  };
+
+  const cancelParticipation = async (id) => {
+    await axios.put(`http://localhost:3001/member/cancel/${id}`).then((res) => {
+      if (res.status === 200) {
+        getPendingSessions();
+        toast.success(res.data.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     });
   };
 
@@ -40,6 +58,14 @@ const PendingSessions = () => {
                 admin={item.adminUname}
                 date={item.date}
               />
+            </td>
+            <td>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() => cancelParticipation(item._id)}
+              >
+                Cancel
+              </button>
             </td>
           </tr>
         </>
@@ -68,6 +94,7 @@ const PendingSessions = () => {
                   <th>Responsible Admin</th>
                   <th>Responsible Coach</th>
                   <th>QR Code</th>
+                  <th>Cancel Participation</th>
                 </tr>
               </thead>
               <tbody>{pendingsessions_HTML_TABLE}</tbody>

@@ -79,4 +79,24 @@ router.get("/participated", auth, (req, res) => {
   } catch (error) {}
 });
 
+//cancel participation
+router.put("/cancel/:sessionId", auth, async (req, res) => {
+  try {
+    //memberId = req.userId;
+    const sessionId = mongoose.Types.ObjectId(req.params.sessionId);
+    await User.updateOne(
+      { username: req.username },
+      {
+        $pullAll: {
+          options: [{ _id: sessionId }],
+        },
+      }
+    );
+    res.status(200).send({ message: "Participation canceled successfully" });
+  } catch (error) {
+    //console.log(error);
+    res.status(500).send({ error: "Ooops! error can't cancel session" });
+  }
+});
+
 module.exports = router;

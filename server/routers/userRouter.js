@@ -201,6 +201,13 @@ router.put("/changeusername", auth, async (req, res) => {
     return res.status(400).json({ error: "Password must be 8" });
   }
   const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
+  //existing user with same new username
+  const existingUser = await User.findOne({ newUsername });
+  if (existingUser) {
+    return res
+      .status(400)
+      .json({ error: "An account with this username already exists" });
+  }
 
   if (!passwordCorrect) {
     return res.status(401).json({
