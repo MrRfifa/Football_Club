@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/MainPage/Home";
 import SigninPage from "./pages/MainPage/SigninPage";
 import SignupPage from "./pages/MainPage/SignupPage";
@@ -28,7 +28,7 @@ import Member from "./pages/Member/Member";
 function Router() {
   const { type, username } = useContext(AuthContext);
   return (
-    <BrowserRouter>
+    <>
       {type === "Parent" && (
         <UserSidebar username={username} UserSidebarData={ParentSidebarData} />
       )}
@@ -88,7 +88,7 @@ function Router() {
           </>
         )}
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
