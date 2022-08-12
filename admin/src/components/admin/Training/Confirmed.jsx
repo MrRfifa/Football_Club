@@ -81,7 +81,7 @@ const Confirmed = () => {
       <div className="card-body">
         <div
           className="badge bg-danger text-wrap"
-          style={{ width: "7rem", marginLeft: "10px", marginBottom: "10px" }}
+          style={{ width: "8rem", marginLeft: "10px", marginBottom: "10px" }}
         >
           Time zone UTC-2
         </div>

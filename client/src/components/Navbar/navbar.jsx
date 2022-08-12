@@ -50,7 +50,6 @@ const Navbar = ({ toggle }) => {
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact
                   offset={-80}
                 >
                   About
@@ -62,7 +61,6 @@ const Navbar = ({ toggle }) => {
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact
                   offset={-80}
                 >
                   Contact Us
@@ -74,7 +72,6 @@ const Navbar = ({ toggle }) => {
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact
                   offset={-80}
                 >
                   Services
