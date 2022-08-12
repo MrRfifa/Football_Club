@@ -21,7 +21,6 @@ const ChangeUsernameModal = () => {
         newData
       );
       if (result.status === 200) {
-        console.log(result);
         toast.success(result.data.message, {
           position: "top-center",
           autoClose: 5000,
@@ -74,7 +73,7 @@ const ChangeUsernameModal = () => {
                   automatically.
                 </div>
                 <div className="form-group mb-3">
-                  <label htmlFor="oldPassword">New username</label>
+                  <label htmlFor="newUsername">New username</label>
                   <input
                     type="text"
                     name="newUsername"

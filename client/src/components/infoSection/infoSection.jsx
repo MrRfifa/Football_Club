@@ -1,4 +1,5 @@
 import React from "react";
+import AnonymousContactUsModal from "../Modal/AnonymousContactUsModal";
 import {
   InfoContainer,
   Column1,
@@ -22,15 +23,13 @@ const InfoSection = ({
   description,
   lightText,
   darkText,
-  buttonLabel,
   img,
   alt,
-  primary,
-  dark,
-  dark2,
+  button,
 }) => {
   return (
     <>
+      <AnonymousContactUsModal />
       <InfoContainer lightBg={lightBg} id={id}>
         <InfoWrapper>
           <InfoRow imgStart={imgStart}>
@@ -40,6 +39,17 @@ const InfoSection = ({
                 <Heading lightText={lightText}>{headline}</Heading>
                 <Subtitle darkText={darkText}>{description}</Subtitle>
               </TextWrapper>
+              {button && (
+                <>
+                  <button
+                    className="btn btn-outline-success btn-lg"
+                    data-bs-toggle="modal"
+                    data-bs-target="#anonymousModal"
+                  >
+                    Contact-Us
+                  </button>
+                </>
+              )}
             </Column1>
             <Column2>
               <ImgWrap>

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
 const Kid = require("../models/kidModel");
+const Contact = require("../models/contactModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/Auth");
@@ -247,6 +248,28 @@ router.put("/changeusername", auth, async (req, res) => {
       }
     );
     return res.json({ message: "Username updated successfully" });
+  }
+});
+
+//contacting admins
+router.post("/contactanonym", async (req, res) => {
+  try {
+    const { identifier, subject, description } = req.body;
+    if (!identifier || !subject || !description) {
+      return res
+        .status(400)
+        .json({ error: "Please enter all required fields" });
+    }
+    const newMessage = new Contact({
+      identifier,
+      subject,
+      description,
+      isAnonymous: true,
+    });
+    await newMessage.save();
+    res.send({ message: "Your message submitted successfully!" });
+  } catch (error) {
+    res.status(400).send({ error: "Ooops! an error occured" });
   }
 });
 module.exports = router;
