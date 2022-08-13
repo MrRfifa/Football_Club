@@ -9,7 +9,7 @@ import AddKids from "./pages/Parent/AddKids";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PendingSessions from "./pages/Coach/PendingSessions";
-import PageNotFound from "./pages/NotFound/NotFound";
+import PageNotFound from "./pages/CommonPages/NotFound";
 import ConfirmedSessions from "./pages/Coach/ConfirmedSessions";
 import DoneSessions from "./pages/Coach/DoneSessions";
 import UserSidebar from "./components/UserSidebar/UserSidebar";
@@ -24,6 +24,7 @@ import Profile from "./components/Profile/Profile";
 import Parent from "./pages/Parent/Parent";
 import Coach from "./pages/Coach/Coach";
 import Member from "./pages/Member/Member";
+import ContactUs from "./pages/CommonPages/ContactUs";
 
 function Router() {
   const { type, username } = useContext(AuthContext);
@@ -65,6 +66,7 @@ function Router() {
             <Route path="/addkid" element={<AddKids />} />
             <Route path="/update/:id" element={<AddKids />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/contactus" element={<ContactUs />} />
             <Route path="/*" element={<PageNotFound />} />
           </>
         )}
@@ -75,6 +77,7 @@ function Router() {
             <Route path="/confirmed" element={<ConfirmedSessions />} />
             <Route path="/done" element={<DoneSessions />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/contactus" element={<ContactUs />} />
             <Route path="/*" element={<PageNotFound />} />
           </>
         )}
@@ -84,6 +87,7 @@ function Router() {
             <Route path="/all" element={<All />} />
             <Route path="/confirmed" element={<Confirmed />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/contactus" element={<ContactUs />} />
             <Route path="/*" element={<PageNotFound />} />
           </>
         )}

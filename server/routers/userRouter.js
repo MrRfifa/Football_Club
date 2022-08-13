@@ -251,7 +251,7 @@ router.put("/changeusername", auth, async (req, res) => {
   }
 });
 
-//contacting admins
+//contacting admins anonymously
 router.post("/contactanonym", async (req, res) => {
   try {
     const { identifier, subject, description } = req.body;
@@ -272,4 +272,28 @@ router.post("/contactanonym", async (req, res) => {
     res.status(400).send({ error: "Ooops! an error occured" });
   }
 });
+
+//contacting admins when logged in
+router.post("/contactus", auth, async (req, res) => {
+  try {
+    const { subject, description } = req.body;
+    identifier = req.username;
+    if (!subject || !description) {
+      return res
+        .status(400)
+        .json({ error: "Please enter all required fields" });
+    }
+    const newMessage = new Contact({
+      identifier,
+      subject,
+      description,
+      isAnonymous: false,
+    });
+    await newMessage.save();
+    res.send({ message: "Your message submitted successfully!" });
+  } catch (error) {
+    res.status(400).send({ error: "Ooops! an error occured" });
+  }
+});
+
 module.exports = router;

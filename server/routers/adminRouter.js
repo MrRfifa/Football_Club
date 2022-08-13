@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Kid = require("../models/kidModel");
 const Admin = require("../models/adminModel");
 const TrainingSession = require("../models/trainingSessionModel");
+const Contact = require("../models/contactModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const adminauth = require("../middlewares/AdminAuth");
@@ -430,4 +431,24 @@ router.get("/getkid/:id", adminauth, async (req, res) => {
     res.status(500).send({ error: "Ooops! error can't get this specific kid" });
   }
 });
+
+//get not logged in users messages
+router.get("/anonymous", adminauth, async (req, res) => {
+  try {
+    const anonymousmessages = await Contact.find({ isAnonymous: true });
+    res.status(200).json(anonymousmessages);
+  } catch (error) {
+    res.status(500).send({ error: "Ooops! Can't get messages" });
+  }
+});
+//get logged in users messages
+router.get("/identified", adminauth, async (req, res) => {
+  try {
+    const identifiedmessages = await Contact.find({ isAnonymous: false });
+    res.status(200).json(identifiedmessages);
+  } catch (error) {
+    res.status(500).send({ error: "Ooops! Can't get messages" });
+  }
+});
+
 module.exports = router;

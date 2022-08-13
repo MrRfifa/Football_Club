@@ -18,23 +18,6 @@ const Admins = () => {
       setLoading(false);
     });
   };
-  // const deleteUser = async (e, id) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (window.confirm("Are you sure that you want to delete this session")) {
-  //       const result = await axios.delete(
-  //         `http://localhost:3001/admin/delete-session/${id}`
-  //       );
-  //       if (result.status === 200) {
-  //         swal("Success!", result.data.message, "success");
-  //         getAdmins();
-  //       }
-  //     }
-  //   } catch (error) {
-  //     swal("Ooops!", "Error while deleting", "error");
-  //     console.log(error);
-  //   }
-  // };
 
   let adminsessions_HTML_TABLE = "";
   if (loading) {
@@ -51,31 +34,13 @@ const Admins = () => {
           </td>
           {item.username === username ? (
             <td className="ps-5" style={{ width: "50px" }}>
-              <span class="badge rounded-pill text-bg-success">True</span>
+              <span className="badge rounded-pill text-bg-success">True</span>
             </td>
           ) : (
             <td className="ps-5" style={{ width: "50px" }}>
-              <span class="badge rounded-pill text-bg-danger">False</span>
+              <span className="badge rounded-pill text-bg-danger">False</span>
             </td>
           )}
-
-          {/* <td>
-            <Link
-              to={`edit-session/${item._id}`}
-              className="btn btn-success btn-sm"
-            >
-              Edit
-            </Link>
-          </td> */}
-          {/* <td>
-            <button
-              type="button"
-              className="btn btn-danger btn-sm"
-              onClick={(e) => deleteUser(e, item._id)}
-            >
-              Delete
-            </button>
-          </td> */}
         </tr>
       );
     });

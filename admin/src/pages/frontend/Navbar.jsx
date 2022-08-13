@@ -19,8 +19,8 @@ const Navbar = () => {
   if (!loggedIn) {
     authButtons = (
       <ul className="navbar-nav">
-        <li className="nav-item">
-          <Link className="nav-link" to="/">
+        <li className="nav-item ">
+          <Link className="nav-link active" to="/">
             Login
           </Link>
         </li>

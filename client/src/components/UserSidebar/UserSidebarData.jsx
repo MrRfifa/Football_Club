@@ -15,6 +15,10 @@ export const ParentSidebarData = [
     title: "Profile",
     path: "/profile",
   },
+  {
+    title: "Contact us",
+    path: "/contactus",
+  },
 ];
 export const MemberSidebarData = [
   {
@@ -32,6 +36,10 @@ export const MemberSidebarData = [
   {
     title: "Profile",
     path: "/profile",
+  },
+  {
+    title: "Contact us",
+    path: "/contactus",
   },
 ];
 
@@ -55,5 +63,9 @@ export const CoachSidebarData = [
   {
     title: "Profile",
     path: "/profile",
+  },
+  {
+    title: "Contact us",
+    path: "/contactus",
   },
 ];

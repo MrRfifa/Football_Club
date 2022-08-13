@@ -2,21 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const AnonymousContactUsModal = () => {
-  const [identifier, setIdentifier] = useState("");
+const ContactUs = () => {
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
 
-  const submitAnonymContact = async (e) => {
+  const submitContact = async (e) => {
     e.preventDefault();
     try {
-      const anonymContactData = {
-        identifier,
+      const contactData = {
         subject,
         description,
       };
       await axios
-        .post("http://localhost:3001/auth/contactanonym", anonymContactData)
+        .post("http://localhost:3001/auth/contactus", contactData)
         .then((res) => {
           if (res.status === 200) {
             toast.success(res.data.message, {
@@ -28,7 +26,6 @@ const AnonymousContactUsModal = () => {
               draggable: true,
               progress: undefined,
             });
-            setIdentifier("");
             setSubject("");
             setDescription("");
           }
@@ -39,40 +36,15 @@ const AnonymousContactUsModal = () => {
   };
 
   return (
-    <div>
-      <div
-        className="modal fade"
-        id="anonymousModal"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="staticBackdropLabel">
-                What can we help you with?
-              </h5>
+    <div className="container py-5 mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-header">
+              <h4>What can we help you with?</h4>
             </div>
-            <div className="modal-body">
-              <form onSubmit={submitAnonymContact}>
-                <div className="form-group mb-3">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={identifier}
-                    className="form-control"
-                    onChange={(e) => {
-                      setIdentifier(e.target.value);
-                    }}
-                    required
-                    autoComplete="off"
-                    placeholder="example@example.ex"
-                  />
-                </div>
+            <div className="card-body">
+              <form onSubmit={submitContact}>
                 <div className="form-group mb-3">
                   <label htmlFor="subject">Subject</label>
                   <input
@@ -100,14 +72,8 @@ const AnonymousContactUsModal = () => {
                     }}
                   ></textarea>
                 </div>
-                <div className="form-group mb-3 d-flex justify-content-between">
-                  <button
-                    className="btn btn-secondary "
-                    type="button"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
+
+                <div className="form-group mb-3 ms-5">
                   <button className="btn btn-info" type="submit">
                     Submit
                   </button>
@@ -121,4 +87,4 @@ const AnonymousContactUsModal = () => {
   );
 };
 
-export default AnonymousContactUsModal;
+export default ContactUs;

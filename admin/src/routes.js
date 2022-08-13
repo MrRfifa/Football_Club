@@ -13,6 +13,7 @@ import Training from "./components/admin/Training/Training";
 import Users from "./components/admin/Users/Users";
 import Kids from "./components/admin/Kids/Kids";
 import Editkid from "./components/admin/Kids/Editkid";
+import ContactUs from "./components/admin/ContactUsMessages/ContactUs";
 
 const AdminRoutes = () => {
   const { loggedIn, getLoggedIn } = useContext(AuthContext);
@@ -28,6 +29,7 @@ const AdminRoutes = () => {
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/kids" element={<Kids />} />
               <Route path="/admin/training" element={<Training />} />
+              <Route path="/admin/messages" element={<ContactUs />} />
               <Route
                 path="/admin/training/edit-session/:id"
                 element={<EditTraining />}

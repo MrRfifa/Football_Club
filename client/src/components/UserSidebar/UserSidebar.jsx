@@ -77,7 +77,7 @@ const UserSidebar = ({ username, UserSidebarData }) => {
                     padding: "15px 20px",
                     fontSize: "18px",
                     marginLeft: "20px",
-                    marginTop: "350px",
+                    marginTop: "300px",
                     backgroundColor: isHovering ? "#060b26" : "#010606",
                   }}
                   onMouseEnter={buttonMouseEnter}
