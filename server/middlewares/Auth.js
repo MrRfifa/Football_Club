@@ -11,6 +11,7 @@ function auth(req, res, next) {
     req.userId = verified.user;
     req.userType = verified.userType;
     req.username = verified.userName;
+    req.lastName = verified.lastName;
     next();
   } catch (error) {
     console.error(error);

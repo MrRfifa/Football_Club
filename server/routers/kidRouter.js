@@ -22,12 +22,13 @@ const upload = multer({ storage: storage }).single("image");
 router.post("/addKid", upload, auth, async (req, res) => {
   try {
     if (req.userType === "Parent") {
-      const { firstName, lastName, dateOfBirth } = req.body;
+      const { firstName, dateOfBirth } = req.body;
       //
+      lastName = req.lastName;
       parentUname = req.username;
       parentId = req.userId;
       //validation
-      if (!firstName || !lastName || !dateOfBirth) {
+      if (!firstName || !dateOfBirth) {
         return res
           .status(400)
           .json({ error: "Please enter all required fields" });

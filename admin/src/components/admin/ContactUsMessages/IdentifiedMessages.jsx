@@ -17,31 +17,30 @@ const IdentifiedMessages = () => {
   return identifiedMessages.map((item, index) => {
     return (
       <div
-        className="accordion accordion-flush"
-        id="accordionFlushExample"
+        className="accordion mt-3"
+        id="accordionPanelsStayOpenExample"
         key={index}
       >
         <div className="accordion-item">
-          <h2 className="accordion-header" id="flush-headingOne">
+          <h2 className="accordion-header" id="panelsStayOpen-headingOne">
             <button
-              className="accordion-button collapsed"
+              className="accordion-button"
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#flush-collapseOne"
-              aria-expanded="false"
-              aria-controls="flush-collapseOne"
+              data-bs-target="#panelsStayOpen-collapseOne"
+              aria-expanded="true"
+              aria-controls="panelsStayOpen-collapseOne"
             >
               {item.identifier}
             </button>
           </h2>
           <div
-            id="flush-collapseOne"
-            className="accordion-collapse collapse"
-            aria-labelledby="flush-headingOne"
-            data-bs-parent="#accordionFlushExample"
+            id="panelsStayOpen-collapseOne"
+            className="accordion-collapse collapse show"
+            aria-labelledby="panelsStayOpen-headingOne"
           >
             <div className="accordion-body">
-              <span class="badge text-bg-info">{item.subject}</span>
+              <span className="badge text-bg-info">{item.subject}</span>
               {"\n"}
               {item.description}
             </div>

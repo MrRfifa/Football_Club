@@ -28,11 +28,18 @@ const Coaches = () => {
         <tr key={index}>
           <td className="ps-2">{index + 1}</td>
           <td className="ps-2">{item.username}</td>
+          <td className="ps-2">
+            {item.lastName[0].toUpperCase() + item.lastName.substring(1)}
+          </td>
+          <td className="ps-2">
+            {item.firstName[0].toUpperCase() + item.firstName.substring(1)}
+          </td>
           <td className="ps-2">{item.options.length}</td>
         </tr>
       );
     });
   }
+  //item.lastName[0].toUpperCase() +item.lastName.substring(1)
 
   return (
     <div className="container px-4 col-md-8">
@@ -42,7 +49,9 @@ const Coaches = () => {
             <tr>
               <th className="ps-2">ID</th>
               <th className="ps-2">Username</th>
-              <th className="ps-2">Confirmed Sessions</th>
+              <th className="ps-2">Last name</th>
+              <th className="ps-2">First name</th>
+              <th className="ps-2">Confirmed+done Sessions</th>
             </tr>
           </thead>
           <tbody>{coachsessions_HTML_TABLE}</tbody>

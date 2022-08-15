@@ -17,7 +17,7 @@ const Navbar = () => {
   getLoggedIn();
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <Link className="navbar-brand ps-3" to="/admin">
+      <Link className="navbar-brand ps-3" to="/admin/dashboard">
         Administration
       </Link>
       <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">

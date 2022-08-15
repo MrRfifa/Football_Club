@@ -9,10 +9,11 @@ const auth = require("../middlewares/Auth");
 //register
 router.post("/reg", async (req, res) => {
   try {
-    const { username, password, passwordVerify, type } = req.body;
+    const { lastName, firstName, username, password, passwordVerify, type } =
+      req.body;
 
     //validation
-    if (!username || !password || !passwordVerify) {
+    if (!username || !password || !passwordVerify || !lastName || !firstName) {
       return res
         .status(400)
         .json({ error: "Please enter all required fields" });
@@ -22,7 +23,15 @@ router.post("/reg", async (req, res) => {
       return res.status(400).json({ error: "Please enter the same password" });
     }
     //finding if existing user with the same username
-    const existingUser = await User.findOne({ username });
+    const lcusername = username.toLowerCase();
+    const lclastName = lastName.toLowerCase();
+    const lcfirstName = firstName.toLowerCase();
+    const existingUser = await User.findOne({
+      $or: [
+        { username: lcusername },
+        { $and: [{ lastName: lclastName }, { firstName: lcfirstName }] },
+      ],
+    });
     if (existingUser) {
       return res
         .status(400)
@@ -35,8 +44,11 @@ router.post("/reg", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     //save a new user account to database
+
     const newUser = new User({
-      username,
+      username: lcusername,
+      lastName: lclastName,
+      firstName: lcfirstName,
       passwordHash,
       type,
     });
@@ -48,10 +60,11 @@ router.post("/reg", async (req, res) => {
         user: savedUser._id,
         userType: savedUser.type,
         userName: savedUser.username,
+        lastName: savedUser.lastName,
+        firstName: savedUser.firstName,
       },
       process.env.JWT_SECRET
     );
-    //res.json({ password: passwordHash, token: token });
     //send the token in a http-only cookie
     res
       .cookie("token", token, {
@@ -61,8 +74,8 @@ router.post("/reg", async (req, res) => {
       })
       .send({ message: "Registred successfully!" });
   } catch (error) {
-    //res.json(error);
-    res.status(500).send();
+    res.json(error);
+    res.status(500).send({ error: "error in registring" });
   }
 });
 
@@ -76,7 +89,8 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ error: "Please enter all required fields" });
     }
-    const existingUser = await User.findOne({ username });
+    const lcusername = username.toLowerCase();
+    const existingUser = await User.findOne({ username: lcusername });
     if (!existingUser) {
       return res.status(401).json({
         error: "Wrong username or password",
@@ -98,6 +112,8 @@ router.post("/login", async (req, res) => {
         user: existingUser._id,
         userType: existingUser.type,
         userName: existingUser.username,
+        lastName: existingUser.lastName,
+        firstName: existingUser.firstName,
       },
       process.env.JWT_SECRET
     );
@@ -143,6 +159,8 @@ router.get("/loggedIn", (req, res) => {
         type: verified.userType,
         username: verified.userName,
         userid: verified.user,
+        lastName: verified.lastName,
+        firstName: verified.firstName,
       });
     }
   } catch (error) {

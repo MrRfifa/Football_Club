@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
 const Kids = () => {
-  //TODO ADD IMAGE TO DATABASE AND USE CARDS FROM BOOTSTRAP https://getbootstrap.com/docs/5.2/components/placeholders/
   const [listKids, setListKids] = useState([]);
 
   useEffect(() => {
@@ -50,7 +49,10 @@ const Kids = () => {
                   />
                   <div className="card-body">
                     <h5 className="card-title text-primary">
-                      {item.firstName + " " + item.lastName}
+                      {item.firstName +
+                        " " +
+                        item.lastName[0].toUpperCase() +
+                        item.lastName.substring(1)}
                     </h5>
                     {/* <p className="card-text"></p> */}
                   </div>

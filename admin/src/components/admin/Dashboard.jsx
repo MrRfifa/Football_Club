@@ -36,44 +36,44 @@ const Dashboard = () => {
     <div className="d-flex justify-content-evenly mt-5">
       <div
         className="card border-warning mb-3"
-        style={{ width: "10rem", height: "5rem" }}
+        style={{ width: "10rem", height: "6rem" }}
       >
         <div className="card-header text-warning">Parents</div>
         <div className="card-body text-warning">
-          <h5 className="card-title position-absolute  start-50 translate-middle fs-1">
+          <h5 className="card-title position-absolute start-50 translate-middle fs-1 mt-2">
             {parentList.length}
           </h5>
         </div>
       </div>
       <div
         className="card border-secondary mb-3"
-        style={{ width: "10rem", height: "5rem" }}
+        style={{ width: "10rem", height: "6rem" }}
       >
         <div className="card-header text-secondary">Kids</div>
         <div className="card-body text-secondary">
-          <h5 className="card-title position-absolute start-50 translate-middle fs-1">
+          <h5 className="card-title position-absolute start-50 translate-middle fs-1 mt-2">
             {listKids.length}
           </h5>
         </div>
       </div>
       <div
         className="card border-info mb-3"
-        style={{ width: "10rem", height: "5rem" }}
+        style={{ width: "10rem", height: "6rem" }}
       >
         <div className="card-header text-info">Coaches</div>
         <div className="card-body text-info">
-          <h5 className="card-title position-absolute start-50 translate-middle fs-1">
+          <h5 className="card-title position-absolute start-50 translate-middle fs-1 mt-2">
             {coachList.length}
           </h5>
         </div>
       </div>
       <div
         className="card border-primary mb-3"
-        style={{ width: "10rem", height: "5rem" }}
+        style={{ width: "10rem", height: "6rem" }}
       >
         <div className="card-header text-primary">Members</div>
         <div className="card-body text-primary">
-          <h5 className="card-title position-absolute start-50 translate-middle fs-1">
+          <h5 className="card-title position-absolute start-50 translate-middle fs-1 mt-2">
             {memberList.length}
           </h5>
         </div>

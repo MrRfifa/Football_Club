@@ -77,12 +77,6 @@ const Canceled = () => {
   return (
     <div className="container px-4">
       <div className="card-body">
-        <div
-          className="badge bg-danger text-wrap"
-          style={{ width: "7rem", marginLeft: "10px", marginBottom: "10px" }}
-        >
-          Time zone UTC-2
-        </div>
         <table className="table table-bordered table-striped">
           <thead>
             <tr>
