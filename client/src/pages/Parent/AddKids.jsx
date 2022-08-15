@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import AuthContext from "../../context/AuthContext";
 
 function AddKids() {
+  const { lastName } = useContext(AuthContext);
   const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [lastname, setLastname] = useState(
+    lastName[0].toUpperCase() + lastName.substring(1)
+  );
   const [date, setDate] = useState(
     new Date(2005, 1, 1).toISOString().slice(0, 10)
   );
@@ -108,7 +112,23 @@ function AddKids() {
             <div className="card-body">
               <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="form-group mb-3">
-                  <label htmlFor="firstname">Firstname</label>
+                  <label htmlFor="lastname">Last name</label>
+                  <input
+                    type="lastname"
+                    disabled
+                    name="lastname"
+                    value={lastname}
+                    className="form-control"
+                    onChange={(e) => {
+                      setLastname(e.target.value);
+                    }}
+                    required
+                    autoComplete="off"
+                    placeholder="Lastname"
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <label htmlFor="firstname">First name</label>
                   <input
                     type="text"
                     name="firstname"
@@ -120,21 +140,6 @@ function AddKids() {
                     required
                     autoComplete="off"
                     placeholder="Firstname"
-                  />
-                </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="lastname">Lastname</label>
-                  <input
-                    type="lastname"
-                    name="lastname"
-                    value={lastname}
-                    className="form-control"
-                    onChange={(e) => {
-                      setLastname(e.target.value);
-                    }}
-                    required
-                    autoComplete="off"
-                    placeholder="Lastname"
                   />
                 </div>
                 <div className="form-group mb-3">

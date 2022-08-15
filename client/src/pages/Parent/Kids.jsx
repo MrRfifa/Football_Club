@@ -81,7 +81,10 @@ const Kids = () => {
                           />
                         </td>
                         <td>{item.firstName}</td>
-                        <td>{item.lastName}</td>
+                        <td>
+                          {item.lastName[0].toUpperCase() +
+                            item.lastName.substring(1)}
+                        </td>
                         <td>{item.dateOfBirth.substring(0, 10)}</td>
                         <td>
                           <Link to={`/update/${item._id}`}>

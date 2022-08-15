@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
 const ProfileModal = () => {
+  const { lastName, firstName } = useContext(AuthContext);
   return (
     <div>
       <div
@@ -24,7 +26,14 @@ const ProfileModal = () => {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">Welcome to your profile settings</div>
+            <div className="modal-body">
+              Welcome{" "}
+              {lastName[0].toUpperCase() +
+                lastName.substring(1) +
+                " " +
+                firstName[0].toUpperCase() +
+                firstName.substring(1)}
+            </div>
             <div className="modal-footer">
               <button
                 className="btn btn-primary"
