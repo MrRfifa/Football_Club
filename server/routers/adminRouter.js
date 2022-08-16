@@ -323,7 +323,7 @@ router.put("/edit-session/:sessionId", adminauth, async (req, res) => {
   }
 });
 
-//Deleting Training session
+//Deleting confirmed Training session
 router.delete("/delete-session/:sessionId", adminauth, async (req, res) => {
   try {
     const sessionId = mongoose.Types.ObjectId(req.params.sessionId);
@@ -352,6 +352,30 @@ router.delete("/delete-session/:sessionId", adminauth, async (req, res) => {
     res.status(500).send({ error: "Ooops! error can't  delete session" });
   }
 });
+
+//Deleting confirmed Training session
+router.delete(
+  "/delete-non-confirmed/:sessionId",
+  adminauth,
+  async (req, res) => {
+    try {
+      const sessionId = mongoose.Types.ObjectId(req.params.sessionId);
+      TrainingSession.findById(sessionId, async function (err, docs) {
+        if (err) {
+          res
+            .status(500)
+            .send({ error: "Ooops! error can't get the session ID" });
+        } else {
+          await TrainingSession.deleteOne({ _id: sessionId });
+          res.json({ message: "session deleted successfully" });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ error: "Ooops! error can't  delete session" });
+    }
+  }
+);
 
 //delete a kid
 router.delete("/delete/:kidId", adminauth, async (req, res) => {
