@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 
 function AddKids() {

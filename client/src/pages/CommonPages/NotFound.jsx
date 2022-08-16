@@ -1,5 +1,4 @@
 import React from "react";
-//import pagenotfound image
 import pagenotfoundImage from "../../assets/images/pagenotfound.jpg";
 
 const PageNotFound = () => {

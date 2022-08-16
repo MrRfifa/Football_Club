@@ -12,7 +12,7 @@ const OpenProfileModal = () => {
       <ChangeUsernameModal />
       <button
         type="button"
-        class="btn btn-primary"
+        className="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#exampleModalToggle"
         style={{ marginLeft: "1100px", marginBottom: "50px" }}

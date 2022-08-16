@@ -50,7 +50,7 @@ const SignInForm = () => {
         zIndex: 0,
         overflow: "hidden",
         background:
-          "linear-gradient(207deg, rgba(255,73,158,1) 0%, rgba(164,128,207,1) 47%, rgba(73,182,255,1) 100%)",
+          "linear-gradient(207deg, rgba(153,226,180,1) 0%, rgba(88,171,86,1) 52%, rgba(24,167,59,1) 100%)",
       }}
     >
       <div

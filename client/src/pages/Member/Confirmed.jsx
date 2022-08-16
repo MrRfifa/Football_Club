@@ -45,30 +45,28 @@ const PendingSessions = () => {
     pendingsessions_HTML_TABLE = pendingList.map((item, index) => {
       item.date = item.date.slice(0, 16).split("T").join(" ");
       return (
-        <>
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{item.date}</td>
-            <td>{item.adminUname}</td>
-            <td>{item.coachUname}</td>
-            <td>
-              <Qrcode
-                username={username}
-                coach={item.coachUname}
-                admin={item.adminUname}
-                date={item.date}
-              />
-            </td>
-            <td>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={() => cancelParticipation(item._id)}
-              >
-                Cancel
-              </button>
-            </td>
-          </tr>
-        </>
+        <tr key={index}>
+          <td>{index + 1}</td>
+          <td>{item.date}</td>
+          <td>{item.adminUname}</td>
+          <td>{item.coachUname}</td>
+          <td>
+            <Qrcode
+              username={username}
+              coach={item.coachUname}
+              admin={item.adminUname}
+              date={item.date}
+            />
+          </td>
+          <td>
+            <button
+              className="btn btn-danger btn-sm"
+              onClick={() => cancelParticipation(item._id)}
+            >
+              Cancel
+            </button>
+          </td>
+        </tr>
       );
     });
   }
