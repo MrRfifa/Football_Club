@@ -1,7 +1,6 @@
-import React from "react";
-import Navbar from "../../../pages/frontend/Navbar";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import Navbar from "../../../pages/frontend/Navbar";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 

@@ -1,9 +1,6 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import swal from "sweetalert";
 
 const Confirmed = () => {
   const [loading, setLoading] = useState(true);
@@ -19,24 +16,6 @@ const Confirmed = () => {
       }
       setLoading(false);
     });
-  };
-
-  const deleteSession = async (e, id) => {
-    e.preventDefault();
-    try {
-      if (window.confirm("Are you sure that you want to delete this session")) {
-        const result = await axios.delete(
-          `http://localhost:3001/admin/delete-session/${id}`
-        );
-        if (result.status === 200) {
-          swal("Success!", result.data.message, "success");
-          getConfirmedSessions();
-        }
-      }
-    } catch (error) {
-      swal("Ooops!", "Error while deleting", "error");
-      console.log(error);
-    }
   };
 
   let confirmedsessions_HTML_TABLE = "";
@@ -62,15 +41,6 @@ const Confirmed = () => {
               Edit
             </Link>
           </td>
-          <td>
-            <button
-              type="button"
-              className="btn btn-outline-danger btn-sm"
-              onClick={(e) => deleteSession(e, item._id)}
-            >
-              Delete
-            </button>
-          </td>
         </tr>
       );
     });
@@ -87,7 +57,6 @@ const Confirmed = () => {
               <th>Admin Username</th>
               <th>Coach Username</th>
               <th>Edit</th>
-              <th>Delete</th>
             </tr>
           </thead>
           <tbody>{confirmedsessions_HTML_TABLE}</tbody>

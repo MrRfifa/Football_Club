@@ -17,21 +17,25 @@ const Navbar = () => {
   getLoggedIn();
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <Link className="navbar-brand ps-3" to="/admin/dashboard">
-        Administration
-      </Link>
-      <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-        <li className="nav-item">
-          <button
-            type="button"
-            className="nav-link btn btn-danger btn-sm text-white"
-            style={{ marginLeft: "1100px" }}
-            onClick={logout}
-          >
-            Logout
-          </button>
-        </li>
-      </ul>
+      <div className="container">
+        <Link className="navbar-brand ps-3" to="/admin/dashboard">
+          Administration
+        </Link>
+        <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <button
+                type="button"
+                className="nav-link btn btn-danger btn-sm text-white"
+                // style={{ marginLeft: "1100px" }}
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
+        </ul>
+      </div>
     </nav>
   );
 };

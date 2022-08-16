@@ -1,6 +1,4 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
@@ -26,7 +24,7 @@ const Pending = () => {
     try {
       if (window.confirm("Are you sure that you want to delete this session")) {
         const result = await axios.delete(
-          `http://localhost:3001/admin/delete-session/${id}`
+          `http://localhost:3001/admin/delete-non-confirmed/${id}`
         );
         if (result.status === 200) {
           swal("Success!", result.data.message, "success");

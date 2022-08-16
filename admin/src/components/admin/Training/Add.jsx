@@ -1,7 +1,6 @@
-import React from "react";
-import swal from "sweetalert";
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
+import swal from "sweetalert";
 
 const Add = () => {
   const [date, setDate] = useState(
@@ -47,9 +46,10 @@ const Add = () => {
               Choose date and time for a training session
               <div
                 className="badge bg-danger text-wrap"
-                style={{ width: "7rem", marginLeft: "10px" }}
+                style={{ width: "auto", marginLeft: "10px" }}
               >
-                Time zone UTC
+                You should add 2 hours : for example if the session is at 9 am ,
+                you should submit at 11 am
               </div>
             </label>
             <input

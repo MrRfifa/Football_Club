@@ -1,8 +1,5 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
 const Done = () => {
@@ -54,14 +51,7 @@ const Done = () => {
           <td>{item.date}</td>
           <td>{item.adminUname}</td>
           <td>{item.coachUname}</td>
-          <td>
-            <Link
-              to={`edit-session/${item._id}`}
-              className="btn btn-outline-warning btn-sm"
-            >
-              Edit
-            </Link>
-          </td>
+
           <td>
             <button
               type="button"
@@ -86,7 +76,6 @@ const Done = () => {
               <th>Date</th>
               <th>Admin Username</th>
               <th>Coach Username</th>
-              <th>Edit</th>
               <th>Delete</th>
             </tr>
           </thead>
