@@ -36,18 +36,26 @@ const ProfileModal = () => {
             </div>
             <div className="modal-footer">
               <button
-                className="btn btn-primary"
+                className="btn btn-secondary text-black"
                 data-bs-target="#exampleModalToggle2"
                 data-bs-toggle="modal"
               >
                 Change password
               </button>
               <button
-                className="btn btn-primary"
+                className="btn btn-info text-black"
                 data-bs-target="#exampleModalToggle3"
                 data-bs-toggle="modal"
               >
                 Change username
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger text-black"
+                data-bs-target="#exampleModalToggle4"
+                data-bs-toggle="modal"
+              >
+                Delete profile
               </button>
             </div>
           </div>

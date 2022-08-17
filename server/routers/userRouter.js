@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/userModel");
 const Kid = require("../models/kidModel");
 const Contact = require("../models/contactModel");
+const TrainingSession = require("../models/trainingSessionModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/Auth");
@@ -35,7 +36,7 @@ router.post("/reg", async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .json({ error: "An account with this username already exists" });
+        .json({ error: "An account with those informations already exists" });
     }
 
     //hash the password
@@ -311,6 +312,56 @@ router.post("/contactus", auth, async (req, res) => {
     res.send({ message: "Your message submitted successfully!" });
   } catch (error) {
     res.status(400).send({ error: "Ooops! an error occured" });
+  }
+});
+
+router.delete("/deleteaccount", auth, async (req, res) => {
+  try {
+    const { password } = req.body;
+    userType = req.userType;
+    if (!password) {
+      return res
+        .status(400)
+        .json({ error: "Please enter all required fields" });
+    } else if (password.length < 8) {
+      return res.status(400).json({ error: "Password must be 8" });
+    }
+    const user = await User.findOne({ username: req.username });
+    const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
+    if (!passwordCorrect) {
+      return res.status(401).json({
+        error: "Wrong Password entered",
+      });
+    } else {
+      if (userType === "Parent") {
+        await User.deleteOne({ _id: user._id });
+        await Kid.deleteMany({ _id: { $in: user.options } });
+      } else if (userType === "Member") {
+        await User.deleteOne({ _id: user._id });
+      } else if (userType === "Coach") {
+        await User.deleteOne({ _id: user._id });
+        await TrainingSession.updateMany(
+          {
+            _id: { $in: user.options },
+          },
+          { $set: { coachUname: "none", confirmed: false } },
+          {
+            returnNewDocument: true,
+          }
+        ).then(
+          (data) => {
+            // console.log("Data", data);
+          },
+          (err) => {
+            // console.log("Error Update", err);
+          }
+        );
+      }
+      res.json({ message: "account deleted successfully" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: error });
   }
 });
 
