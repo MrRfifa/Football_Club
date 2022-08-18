@@ -7,7 +7,7 @@ import DeleteProfileModal from "./DeleteProfileModal";
 
 const OpenProfileModal = () => {
   return (
-    <div>
+    <div className="container-fluid">
       <ProfileModal />
       <ChangePasswordModal />
       <ChangeUsernameModal />

@@ -125,7 +125,7 @@ router.post("/login", async (req, res) => {
         secure: true,
         sameSite: "none",
       })
-      .send({ message: "Loggedin successfully!" });
+      .send({ message: "Logged in successfully!" });
   } catch (error) {
     res.status(500).send(error);
   }

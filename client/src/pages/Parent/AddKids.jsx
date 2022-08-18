@@ -153,20 +153,22 @@ function AddKids() {
                     required
                   />
                 </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="file">Choose your kid image</label>
-                  <input
-                    type="file"
-                    name="image"
-                    filename="image"
-                    className="form-control"
-                    onChange={(e) => {
-                      setFilename(e.target.files[0]);
-                    }}
-                    accept="image/*"
-                    required
-                  />
-                </div>
+                {!id && (
+                  <div className="form-group mb-3">
+                    <label htmlFor="file">Choose your kid image</label>
+                    <input
+                      type="file"
+                      name="image"
+                      filename="image"
+                      className="form-control"
+                      onChange={(e) => {
+                        setFilename(e.target.files[0]);
+                      }}
+                      accept="image/*"
+                      required
+                    />
+                  </div>
+                )}
                 <div className="form-group mb-3 d-flex justify-content-between">
                   <button className="btn btn-success" type="submit">
                     {!id ? "Add kid" : "Update kid"}

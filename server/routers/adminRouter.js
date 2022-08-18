@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Kid = require("../models/kidModel");
+const User = require("../models/userModel");
 const Admin = require("../models/adminModel");
 const TrainingSession = require("../models/trainingSessionModel");
 const Contact = require("../models/contactModel");
@@ -7,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const adminauth = require("../middlewares/AdminAuth");
 const { default: mongoose } = require("mongoose");
-const User = require("../models/userModel");
+const fs = require("fs");
 
 //adding an admin
 router.post("/regadmin", async (req, res) => {
@@ -385,6 +386,7 @@ router.delete("/delete/:kidId", adminauth, async (req, res) => {
       if (err) {
         console.log(err);
       } else {
+        fs.unlinkSync(`images/${docs.image}`);
         await Kid.deleteOne({ _id: kidId });
         await User.updateOne(
           { username: docs.parentUname },
@@ -394,6 +396,7 @@ router.delete("/delete/:kidId", adminauth, async (req, res) => {
             },
           }
         );
+        console.log();
         res.json({ message: "deleted successfully" });
       }
     });
@@ -412,19 +415,18 @@ router.put("/update/:kidId", adminauth, async (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        //todo existing kid with the same data
-        // const existingKid = await Kid.findOne({
-        //   lastName: lastName,
-        //   firstName: firstName,
-        //   dateOfBirth: dateOfBirth,
-        // });
-        // console.log(existingKid);
-        // if (existingKid) {
-        //   return res
-        //     .status(400)
-        //     .json({ error: "A kid with those information already exists" });
-        // }
-        //todo existing kid with the same data
+        // existing kid with the same data
+        const existingKid = await Kid.findOne({
+          lastName: lastName,
+          firstName: firstName,
+        });
+        console.log(existingKid);
+        if (existingKid) {
+          return res
+            .status(400)
+            .json({ error: "A kid with those information already exists" });
+        }
+        // existing kid with the same data
         const updatedkid = await Kid.findOneAndUpdate(
           { _id: kidId },
           {

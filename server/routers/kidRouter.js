@@ -113,8 +113,8 @@ router.delete("/delete/:kidId", auth, async (req, res) => {
         console.log(err);
       } else {
         const parentUname = docs.parentUname;
-        // console.log(parentUname);
         if (parentUname === req.username) {
+          fs.unlinkSync(`images/${docs.image}`);
           await Kid.deleteOne({ _id: kidId });
           await User.updateOne(
             { username: req.username },
@@ -139,7 +139,6 @@ router.put("/update/:kidId", upload, auth, async (req, res) => {
   try {
     const kidId = mongoose.Types.ObjectId(req.params.kidId);
     const { firstName, lastName, dateOfBirth } = req.body;
-    const { image } = req.file.filename;
 
     Kid.findById(kidId, async function (err, docs) {
       if (err) {
@@ -148,17 +147,22 @@ router.put("/update/:kidId", upload, auth, async (req, res) => {
         const parentUname = docs.parentUname;
         if (parentUname === req.username) {
           //todo existing kid with the same data
-          // const existingKid = await Kid.findOne({
-          //   lastName: lastName,
-          //   firstName: firstName,
-          //   dateOfBirth: dateOfBirth,
-          // });
-          // console.log(existingKid);
-          // if (existingKid) {
-          //   return res
-          //     .status(400)
-          //     .json({ error: "A kid with those information already exists" });
-          // }
+          const existingKid = await Kid.findOne({
+            $and: [
+              { lastName: lastName },
+              {
+                $and: [
+                  { firstName: { $ne: docs.firstName } },
+                  { firstName: firstName },
+                ],
+              },
+            ],
+          });
+          if (existingKid) {
+            return res
+              .status(400)
+              .json({ error: "A kid with those information already exists" });
+          }
           //todo existing kid with the same data
           const updatedkid = await Kid.findOneAndUpdate(
             { _id: kidId },
@@ -167,11 +171,6 @@ router.put("/update/:kidId", upload, auth, async (req, res) => {
                 firstName: firstName,
                 lastName: lastName,
                 dateOfBirth: dateOfBirth,
-                image: image,
-                info: {
-                  data: fs.readFileSync("images/" + req.file.filename),
-                  contentType: "image/png",
-                },
               },
             },
             { new: true }

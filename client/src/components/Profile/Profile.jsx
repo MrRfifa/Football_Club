@@ -3,7 +3,7 @@ import OpenProfileModal from "../Modal/openProfileModal";
 
 const Profile = () => {
   return (
-    <div className="container-fluid ">
+    <div className="container-fluid">
       <h1
         style={{
           marginTop: "70px",
