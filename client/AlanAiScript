@@ -1,0 +1,20 @@
+intent('hello', p => {
+    p.play('(hello|hi there)');
+});
+
+intent('What can I do here?', p => {
+    p.play('This app is for football lovers');
+});
+intent('(Open sign-up page| I want to register)', (p) => {
+    p.play( {command:'signupCommand' ,route: '/sign-up'} );
+    p.play("Ok")
+});
+intent('(Open sign-in page| I want to open my account)', (p) => {
+    p.play( {command:'signinCommand' ,route: '/sign-in'} );
+    p.play("Alright")
+});
+
+intent('(Get me back to home page| Take me back)', (p) => {
+    p.play( {command:'homeCommand' ,route: '/'} );
+    p.play('Getting back!' ,'Okayyy!')
+});
